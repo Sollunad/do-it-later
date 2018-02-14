@@ -135,3 +135,9 @@ body{
 	cursor: pointer;
 	background: linear-gradient(#abff8c, #ddffd1 5%, #ffffff 80%);
 }
+
+#Task_list img{
+	height: 300px;
+	width: 300px;
+}
+
