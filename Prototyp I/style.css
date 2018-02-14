@@ -105,6 +105,17 @@ body{
 	width: 100%;
 }
 
+.Nav_elem_picked{
+	float: none;
+	list-style-type: none;
+	margin: 5px 0 5px 0;
+	padding: 0;
+	transition: all 0.3s ease-out;
+	color: #cc0000;
+	height: 20px;
+	width: 100%;
+}
+
 .Nav_elem:hover{
 	line-height: 25px;
 	font-size: 25px;
@@ -156,3 +167,19 @@ body{
 	margin: 20px;
 }
 
+#logout_wrapper {
+    margin-top: 150px;
+}
+
+#fixedButton {
+    position: fixed;
+    bottom: 30px;
+    right: 30px; 
+	height: 60px;
+	width: 60px;
+	color: #ffffff;
+	font-size: 25px;
+	background: #FF7042;
+	border-radius: 50%;
+	border-style: solid;
+}
