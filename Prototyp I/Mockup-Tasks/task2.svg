@@ -81,7 +81,7 @@
 	font-family="Helvetica, Arial, sans-serif"
 	text-anchor="start"
 	xml:space="preserve"
-	stroke="#6D97AB">14.02.2018, 16:40 Uhr</text>
+	stroke="#6D97AB">14.02.2018, 16:41 Uhr</text>
   <text
 	id="titel"
 	xml:space="preserve"
@@ -92,7 +92,7 @@
 	stroke-width="0" 
 	stroke="#000" 
 	fill="#000000" 
-	font-weight="bold">PC aufsetzen</text>
+	font-weight="bold">Meeting planen</text>
   <text
 	id="beschreibung" 
 	xml:space="preserve" 
@@ -103,7 +103,7 @@
 	stroke-width="0" 
 	fill="#000000" 
 	transform="matrix(0.9960949420928954,0,0,1,-0.8769906759262084,0) "
-	stroke="#000">Vorbereitung der Arbeits-PCs</text>
+	stroke="#000">Raum D5.023</text>
   <rect
 	id="delete_space"
 	fill="#ff3f3f"

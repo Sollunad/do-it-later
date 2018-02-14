@@ -2,7 +2,7 @@
  <g>
   <title>background</title>
   <rect
-	fill="#AEDD94"
+	fill="#FEF8A0"
 	stroke-width="5"
 	stroke="#000000"
 	stroke-opacity="null"
@@ -69,7 +69,7 @@
 	font-size="24"
 	font-family="Helvetica, Arial, sans-serif"
 	text-anchor="start"
-	xml:space="preserve">stefanreschke</text>
+	xml:space="preserve">danielklaus</text>
   <text
 	id="erstellzeit"
 	fill="#000000"
@@ -81,7 +81,7 @@
 	font-family="Helvetica, Arial, sans-serif"
 	text-anchor="start"
 	xml:space="preserve"
-	stroke="#6D97AB">14.02.2018, 16:40 Uhr</text>
+	stroke="#6D97AB">14.02.2018, 13:40 Uhr</text>
   <text
 	id="titel"
 	xml:space="preserve"
@@ -92,7 +92,7 @@
 	stroke-width="0" 
 	stroke="#000" 
 	fill="#000000" 
-	font-weight="bold">PC aufsetzen</text>
+	font-weight="bold">Kostenplanung aufstellen</text>
   <text
 	id="beschreibung" 
 	xml:space="preserve" 
@@ -103,7 +103,7 @@
 	stroke-width="0" 
 	fill="#000000" 
 	transform="matrix(0.9960949420928954,0,0,1,-0.8769906759262084,0) "
-	stroke="#000">Vorbereitung der Arbeits-PCs</text>
+	stroke="#000">Einreichen bei Jesse</text>
   <rect
 	id="delete_space"
 	fill="#ff3f3f"

@@ -100,7 +100,7 @@ body{
 	margin: 5px 0 5px 0;
 	padding: 0;
 	transition: all 0.3s ease-out;
-	color: #edf2ff;
+	color: #000000;
 	height: 20px;
 	width: 100%;
 }
@@ -117,8 +117,7 @@ body{
 #Main_header{
 	float: right;
 	width: 90%;
-	margin: 0;
-	padding: 0;
+	margin-bottom: 20px;
 }
 
 .Nav_button{
@@ -136,8 +135,24 @@ body{
 	background: linear-gradient(#abff8c, #ddffd1 5%, #ffffff 80%);
 }
 
+.Nav_button_main{
+	border-radius: 5px;
+	border: 1px solid black;
+	margin: 10px 0px 0px 10px;
+	padding: 0;
+	width: 75px;
+	height: 35px;
+	background: linear-gradient(#ffffff, #ddffd1 5%, #abff8c 80%);
+}
+
+.Nav_button_main:hover{
+	cursor: pointer;
+	background: linear-gradient(#abff8c, #ddffd1 5%, #ffffff 80%);
+}
+
 #Task_list img{
-	height: 300px;
+	height: 200px;
 	width: 300px;
+	margin: 20px;
 }
 
