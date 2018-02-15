@@ -10,6 +10,15 @@
 	height="402"
 	width="582"
 	y="-1" x="-1"/>
+  <foreignObject
+	id="edit_button"
+	y="-1" x="-1"
+	height="402" width="582"
+	requiredExtensions="http://www.w3.org/1999/xhtml">
+    <body xmlns="http://www.w3.org/1999/xhtml">
+		<button style="width:580px;height:400px;outline:none;background-color:Transparent;background-repeat:no-repeat;border:none;cursor:pointer;overflow:hidden" onclick="alert('Edit the Card!')"></button> 
+    </body>
+  </foreignObject>
   <g display="none" id="canvasGrid">
    <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%" id="svg_5"/>
   </g>
@@ -113,5 +122,14 @@
 	width="78" height="69"
 	stroke="#6D97AB"
 	opacity="0"/>
+  <foreignObject
+	id="delete_button"
+	x="484.5" y="15.5"
+    width="78" height="69"
+	requiredExtensions="http://www.w3.org/1999/xhtml">
+    <body xmlns="http://www.w3.org/1999/xhtml">
+		<button style="width:200px;height:200px;outline:none;background-color:Transparent;background-repeat:no-repeat;border:none;cursor:pointer;overflow:hidden" onclick="alert('Close the Card!')"></button> 
+    </body>
+  </foreignObject>
  </g>
 </svg>
