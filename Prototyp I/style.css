@@ -155,6 +155,7 @@ body{
 	width: 75px;
 	height: 35px;
 	background: linear-gradient(#ffffff, #ddffd1 5%, #abff8c 80%);
+	color: #000000;
 }
 
 .Nav_button_main:hover{
