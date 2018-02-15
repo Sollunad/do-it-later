@@ -185,3 +185,16 @@ body{
 	border-radius: 50%;
 	border-style: solid;
 }
+
+#overfixedButton {
+    position: fixed;
+    bottom: 90px;
+    right: 30px; 
+	height: 60px;
+	width: 60px;
+	color: #ffffff;
+	font-size: 25px;
+	background: #FF7042;
+	border-radius: 50%;
+	border-style: solid;
+}
