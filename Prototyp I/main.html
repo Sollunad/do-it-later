@@ -6,21 +6,23 @@
 			<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
 			<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css">
 			<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
-			<script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"></script>			
+			<script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"></script>
 			<link rel="stylesheet" href="style.css">
 		</head>
 		<body>
 			<div class="container-fluid col-lg-12">
+
 				<nav class="navbar navbar-inverse">
 					<div class="container-fluid">
 						<div class="navbar-header">
-							<a class="navbar-brand" href="nav.html">Do It Later</a>
+							<a class="navbar-brand" href="main.html">Do It Later</a>
 						</div>
 						<ul class="nav navbar-nav">
-							<li class="navbar-text active">Selected Group</li>
+							<li class="navbar-text">Selected Group</li>
+							<li class="pointer"><a data-toggle="modal" data-target="#addMemberModal">Add User</a></li>
 							<li class="dropdown">
-								<a class="dropdown-toggle" data-toggle="dropdown">Groups
-								<span class="caret"></span></a>			
+								<a class="dropdown-toggle pointer" data-toggle="dropdown">Groups
+								<span class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li><a href="">Group 1</a></li>
 									<li><a href="">Group 2</a></li>
@@ -28,7 +30,7 @@
 								</ul>
 							</li>
 							<li><a data-toggle="modal" data-target="#newGroupModal" href="">Add Group</a></li>
-							<li><a href="chat.html">Chat</a></li>
+							<li><a href="chat.html" target="_blank">Group Chat</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="navbar-text"><span class="glyphicon glyphicon-user"></span> Max Mustermann</li>
@@ -36,6 +38,7 @@
 						</ul>
 					</div>
 				</nav>
+
 				<div id="Task_list">
 					<table>
 						<tr>
@@ -52,10 +55,9 @@
 						</tr>
 					</table>
 				</div>
-		
+
 				<button id="fixedButton" data-toggle="modal" data-target="#newCardModal">+</button>
-				<button id="overfixedButton" data-toggle="modal" data-target="#addMemberModal">add</button>
-				
+
 				<div id="newCardModal" class="modal fade" role="dialog">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -90,7 +92,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<div id="newGroupModal" class="modal fade" role="dialog">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -114,7 +116,6 @@
 					</div>
 				</div>
 
-
 				<div id="addMemberModal" class="modal fade" role="dialog">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -137,6 +138,7 @@
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</body>
 	</html>
