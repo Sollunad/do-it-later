@@ -45,7 +45,7 @@ function appendSVG(card) {
 	let id = card.id;
 	var object = createSVG(card);
 	//console.log(id, object);
-	//$("#SVGSPACE").append(object);
+	//$("#Task_List").append(object);
 }
 
 function changeContent(card) {
