@@ -14,6 +14,12 @@ var statColor = {
 	"done":"lime"
 };
 
+var statDiv = {
+	"open":"open_tasks",
+	"work":"working_tasks",
+	"done":"done_tasks"
+};
+
 function Card(id, title, content, stat, assigned, time) {
 	this.id = id;
     this.title = title;
@@ -30,66 +36,35 @@ function getSVG(card) {
 	return doc;
 }
 
-/*function createSVG(card) {
-	let id = card.id;
-	let object = $("<object></object>")
-		.attr("id", card.id)
-		.attr("class", card.stat)
-		.attr("data", "./task.svg")
-		.attr("type", "image/svg+xml")
-		.load();
-	return object;
-}
-
-function appendSVG(card) {
-	let id = card.id;
-	var object = createSVG(card);
-	//console.log(id, object);
-	//$("#Task_List").append(object);
-}
-
-function changeContent(card) {
-	var svg = getSVG(card);
-	console.log("Change Content aufgerufen!");
-	$("#canvas_background", svg).css("fill", statColor[card.stat]);
-	$("#titel", svg).text = card.title;
-	$("#beschreibung", svg).text = card.content;
-	$("#bearbeiter", svg).text = card.assigned;
-	$("#erstellzeit", svg).text = card.time;
-	console.log("Change Content durchlaufen!");
-}*/
-
 function appendSVG(card) {
 	$.get("task.svg", function(data) {
 		let cardId = "#" + card.id;
-		let wrapperId = "#" + card.stat;
+		let wrapperId = "#" + statDiv[card.stat];
 		$(wrapperId).append(data);		
 		$(wrapperId + " > #newCard").attr("id",card.id);
 		$(cardId).attr("class", card.stat);
+		
+		// Gestaltung
 		$(cardId + " > #canvas_background").attr("fill", statColor[card.stat]);
 		$(cardId + " > #titel").text(card.title);
 		$(cardId + " > #beschreibung").text(card.content);
 		$(cardId + " > #bearbeiter").text(card.assigned);
 		$(cardId + " > #erstellzeit").text(card.time);
+		
+		// Click-Events hinzufügen
+		$(cardId + " > #canvas_background").click( () => {
+			$('#newCardModal').modal();
+		});
+		$(cardId + " > #delete_space").click( () => {
+			var answer = confirm("Delete Card?");
+		});
+		
 	});
 }
 
 function appendMultiple(cards) {
 	for (var i = 0; i < cards.length; i++)
 		appendSVG(cards[i]);
-}
-
-function addModals() {
-	for (var i = 0; i < allSVG.length; i++) {
-		let id = allSVG[i];
-		let svg = $("#" + id)[0].contentDocument;
-		$("#canvas_background", svg).click( () => {
-			$('#modalEdit').modal();
-		});
-		$("#delete_space", svg).click( () => {
-			$('#modalDelete').modal();
-		});	
-	}
 }
 
 function deleteCard(id) {

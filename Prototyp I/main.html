@@ -39,25 +39,20 @@
 					</div>
 				</nav>
 
-				<div id="Task_list">
-					<table>
-						<tr>
-							<th><img src="Mockup-Tasks/task1.svg" /></th>
-							<th><img src="Mockup-Tasks/task2.svg" /></th>
-							<th><img src="Mockup-Tasks/task3.svg" /></th>
-						</tr>
-						<tr>
-							<th><img src="Mockup-Tasks/task4.svg" /></th>
-						</tr>
-						<tr>
-							<th><img src="Mockup-Tasks/task5.svg" /></th>
-							<th><img src="Mockup-Tasks/task6.svg" /></th>
-						</tr>
-					</table>
+				<div id="Task_List">
+					<div id="open_tasks"></div>
+					<div id="working_tasks"></div>
+					<div id="done_tasks"></div>
 				</div>
+				
+				<script src="script.js"></script>
+				<script>
+					appendMultiple(cards);
+				</script>
 
 				<button id="fixedButton" data-toggle="modal" data-target="#newCardModal">+</button>
 
+				<!-- MODAL: Hinzufügen einer neuen Karte -->
 				<div id="newCardModal" class="modal fade" role="dialog">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -93,6 +88,7 @@
 					</div>
 				</div>
 
+				<!-- MODAL: Erstellen einer neuen Gruppe -->
 				<div id="newGroupModal" class="modal fade" role="dialog">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -115,7 +111,8 @@
 						</div>
 					</div>
 				</div>
-
+				
+				<!-- MODAL: Hinzufügen eines neuen Users zum Board -->
 				<div id="addMemberModal" class="modal fade" role="dialog">
 					<div class="modal-dialog">
 						<div class="modal-content">
