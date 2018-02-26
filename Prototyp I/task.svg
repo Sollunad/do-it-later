@@ -1,4 +1,4 @@
-<svg id="newCard" width="580" height="400" xmlns="http://www.w3.org/2000/svg">
+<svg id="newCard" width="580" height="400" viewBox="0 0 580 400" xmlns="http://www.w3.org/2000/svg">
   <rect
 	id="canvas_background"
 	fill="#AEDD94"

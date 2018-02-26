@@ -1,11 +1,17 @@
 // ass. Array für alle SVGs (Key: Id, Value: SVG-Content-Objekt)
-var allSVG = [];
+var allSVG = {};
 
 var cards = [
-	new Card('1', 'stuff', 'shit', 'done', 'cool', 'now'),
-	new Card('2', 'lul', 'kek', 'work', 'cool', 'now'),
-	new Card('3', 'fancy', 'loool', 'work', 'cool', 'now'),
-	new Card('4', 'shit', 'blap', 'open', 'cool', 'now')
+	new Card('1', 'Datenbank aufsetzen', 'NoSQL = toll', 'done', 'jessejrichter', 'now'),
+	new Card('2', 'Design überarbeiten', '...bevors jemand falsch macht.', 'work', 'jonasseng', 'cool', 'now'),
+	new Card('3', 'SVGs liebhaben', 'I <3 SVG', 'work', 'danielklaus', 'now'),
+	new Card('4', 'Kaffee kochen', 'KAFFEEE!', 'open', 'praktikant', 'now')
+];
+
+var groups = [
+	new Group('1', 'Webengineering Projekt I', 'stefanreschke'),
+	new Group('2', 'Compilerbau Projekt III', 'danielklaus'),
+	new Group('3', 'Homepages für die Arbeit', 'jessejrichter')
 ];
 
 var statColor = {
@@ -29,15 +35,15 @@ function Card(id, title, content, stat, assigned, time) {
 	this.time = time;
 }
 
-function getSVG(card) {
-	let id = "#" + card.id;
-	var doc = $(id)[0].contentDocument;
-	console.log(doc);
-	return doc;
-}
+function Group(id, name, admin) {
+	this.id = id;
+	this.name = name;
+	this.admin = admin;	
+};
 
 function appendSVG(card) {
-	$.get("task.svg", function(data) {
+	allSVG[card.id] = card;
+	$.get("task.svg", (data) => {
 		let cardId = "#" + card.id;
 		let wrapperId = "#" + statDiv[card.stat];
 		$(wrapperId).append(data);		
@@ -52,21 +58,52 @@ function appendSVG(card) {
 		$(cardId + " > #erstellzeit").text(card.time);
 		
 		// Click-Events hinzufügen
-		$(cardId + " > #canvas_background").click( () => {
-			$('#newCardModal').modal();
+		$(cardId + " > #canvas_background").click(() => {
+			$("input#title").val(card.title);
+			$("input#content").val(card.content);
+			$("input#status").val(card.stat);
+			$("input#assignment").val(card.assigned);
+			$("#newCardModalConfirm").html("Update");
+			$("#newCardModalConfirm").unbind("click").click(() => { updateSVG(cardId, card); });
+			$("#newCardModal").modal();
 		});
 		$(cardId + " > #delete_space").click( () => {
-			var answer = confirm("Delete Card?");
-		});
-		
+			if (confirm("Delete Card?")) {
+				$(cardId).remove();
+			}
+		});		
 	});
 }
 
-function appendMultiple(cards) {
+function updateSVG(cardId, card) {
+	$(cardId).remove();
+	var newCard = new Card(
+		card.id,
+		$("input#title").val(),
+		$("input#content").val(),
+		$("input#status").val(),
+		$("input#assignment").val(),
+		card.time
+	);
+	appendSVG(newCard);
+}
+
+function appendGroup(group) {
+	$("#Group_List").append(
+		$("<li></li>").html(
+			$("<a></a>")
+				.attr("href", "")
+				.html(group.name)
+		)
+	);
+}
+
+function multipleCards(cards) {
 	for (var i = 0; i < cards.length; i++)
 		appendSVG(cards[i]);
 }
 
-function deleteCard(id) {
-	$( "#" + id ).remove();
+function multipleGroups(groups) {
+	for (var i = 0; i < groups.length; i++)
+		appendGroup(groups[i]);	
 }

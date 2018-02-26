@@ -54,14 +54,11 @@ body{
 }
 
 #Task_List > div > svg {
+	height: 300px;
+	width: 435px;
+	margin: 20px;
 	margin: 5px 5px 5px 5px;
 	border: 2px 2px 2px 2px;
-}
-
-#Task_List img{
-	height: 200px;
-	width: 300px;
-	margin: 20px;
 }
 
 #fixedButton {
