@@ -1,0 +1,10 @@
+#SVGSPACE {
+	display: flex;
+	flex-direction: column;
+}
+
+#SVGSPACE > * {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;	
+}
