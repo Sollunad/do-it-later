@@ -1,6 +1,8 @@
 package Servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,15 +14,15 @@ public class Add_User extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     public Add_User() {
-        // TODO Auto-generated constructor stub
+    	super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String Username = request.getParameter("name");
+		response.getWriter().append(Username);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -1,7 +1,7 @@
 $().ready(function(){
 	$("#usr_confirm").click(function(){
-		$.post("/Add_User", function(data){
-			alert("Abgeschickt " + data);
+		$.post("http://localhost:8080/DoItLater/Add_User", function(data){
+			alert(data);
 		});
 	});
 });
