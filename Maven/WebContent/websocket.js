@@ -9,10 +9,11 @@ if ('WebSocket' in window) {
 }
 
 websocket.onopen = function onOpen() {
-	if (websocket != null) {			
-            var p = document.createElement("p");
-		    p.innerHTML = "Verbunden!";
-		    document.getElementById("outputtext").appendChild(p);
+	if (websocket != null) {
+		var name = "Max Mustermann";
+        var p = document.createElement("p");
+		p.innerHTML = name + " joined the Room!";
+		document.getElementById("outputtext").appendChild(p);
 	}else {alert("WebSocket does not work!")} };
 	
 websocket.onmessage = function onMessage(evt) {	        
@@ -22,7 +23,7 @@ websocket.onmessage = function onMessage(evt) {
 			};
 			
 function send() {
-			var name = document.getElementById("Username");
+			var name = "Max Mustermann";
 			var inputtext = document.getElementById("msg");
-			websocket.send(name.value + ": " + inputtext.value);
+			websocket.send(name + ": " + inputtext.value);
 			};
