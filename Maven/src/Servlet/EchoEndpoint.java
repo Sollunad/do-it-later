@@ -4,13 +4,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.websocket.EncodeException;
-import javax.websocket.Endpoint;
-import javax.websocket.EndpointConfig;
-import javax.websocket.MessageHandler;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
-import javax.websocket.RemoteEndpoint.Basic;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
