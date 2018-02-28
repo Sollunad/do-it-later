@@ -42,10 +42,23 @@ body{
 	width: 100%;
 }
 
-#Task_list img{
-	height: 200px;
-	width: 300px;
+#Task_List {
+	display: flex;
+	flex-direction: column;
+}
+
+#Task_List > div {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;	
+}
+
+#Task_List > div > svg {
+	height: 300px;
+	width: 435px;
 	margin: 20px;
+	margin: 5px 5px 5px 5px;
+	border: 2px 2px 2px 2px;
 }
 
 #fixedButton {
@@ -95,8 +108,4 @@ body{
 
 .chat_user:nth-child(even){
 	color: black;
-}
-
-.padding{
-	padding: 5px 0 5px 0;
 }

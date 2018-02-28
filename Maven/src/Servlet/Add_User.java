@@ -18,11 +18,8 @@ public class Add_User extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
-		String Username = request.getParameter("usr_name");
-		
-		System.out.println(Username);
-		out.append(Username);
+		String Username = request.getParameter("name");
+		response.getWriter().append(Username);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
