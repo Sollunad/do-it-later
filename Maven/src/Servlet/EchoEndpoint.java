@@ -19,9 +19,6 @@ private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Se
 @OnOpen
 public void open(Session session, @PathParam("room") String room) {
 	clients.add(session);
-	System.out.println("session openend and bound to room: " + room);
-	
-	//session.getUserProperties().put("room", room);
 }
 	
 @OnMessage
@@ -29,17 +26,13 @@ public void echoTextMessage(Session session, String msg) {
     try {
     	synchronized (clients){
     		for (Session client: clients) 
-    			//if (!client.equals(session) && session.isOpen() ) 
-    				client.getBasicRemote().sendText(msg);
+				client.getBasicRemote().sendText(msg);
         }
     } catch (IOException e) {
-    	System.out.println("Ein Problem");
-    	
+    	System.out.println("Can't send Message!");
         try {
             session.close();
-        } catch (IOException e1) {
-            // Ignore
-        }
+        } catch (IOException e1){}
     }
 }
 

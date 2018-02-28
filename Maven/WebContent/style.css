@@ -96,3 +96,7 @@ body{
 .chat_user:nth-child(even){
 	color: black;
 }
+
+.padding{
+	padding: 5px 0 5px 0;
+}
