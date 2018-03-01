@@ -34,27 +34,20 @@ public class CreateGroup extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// Parameter
-		String groupname = request.getParameter("group_name");
-		String username = request.getParameter("user_name");
+		String groupname = request.getParameter("gname");
+		String userID = request.getParameter("uid");
 		
 		// DB Connection
 		jdbcConnector jd = new jdbcConnector();
-		String query_get_userid = "SELECT UserID FROM USER WHERE UserID = "+username+";";
-		String query_add_group = "INSERT INTO GROUP (GroupName, fk_GroupAdmin) VALUES ("+groupname+", "+username+");";
-		String userid = jd.query(query_get_userid);
+		String query = "INSERT INTO `GROUP` (GroupName, fk_GroupAdmin) VALUES ('"+groupname+"', '"+userID+"');";
 		
-		if(userid != null) {
-			if(jd.query(query_add_group) == null) {
-				response.getWriter().append("Gruppe konnte nicht hinzugefügt werden");
-				return;
-			}
-			else {
-				response.getWriter().append("Gruppe "+groupname+" hinzugefügt");
-				return;
-			}
+		String res = jd.query(query);
+		if(res != null) {
+			response.getWriter().append("Gruppe "+groupname+" wurde erstellt!");
+			return;
 		}
 		else {
-			response.getWriter().append("User konnte nicht eindeutig identifiziert werden");
+			response.getWriter().append("Fehler beim Erstellen der Gruppe");
 			return;
 		}
 	}

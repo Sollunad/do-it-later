@@ -1,0 +1,117 @@
+<svg width="580" height="400" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>background</title>
+  <rect
+	fill="#FFD783"
+	stroke-width="5"
+	stroke="#000000"
+	stroke-opacity="null"
+	id="canvas_background"
+	height="402"
+	width="582"
+	y="-1" x="-1"/>
+  <g display="none" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%" id="svg_5"/>
+  </g>
+ </g>
+
+ <g>
+  <title>Karte</title>  
+  <line
+	id="delete_line1"
+	fill="none" stroke-width="3"
+	fill-opacity="null"
+	x1="498.5" y1="23.5" x2="548.5" y2="73.5"
+	stroke-linejoin="null"
+	stroke-linecap="null"
+	stroke="#ff0000"/>
+  <line
+	id="delete_line2"
+	fill="none"
+	stroke="#ff0000"
+	stroke-width="3"
+	fill-opacity="null"
+	x1="498.5" y1="73.5" x2="547.5" y2="25.5"
+	stroke-linejoin="null"
+	stroke-linecap="null"/>
+  <text
+	id="label1"
+	fill="#000000"
+	stroke-width="0"
+	stroke-opacity="null"
+	fill-opacity="null"
+	x="29.5" y="322"
+	font-size="24"
+	font-family="Helvetica, Arial, sans-serif"
+	text-anchor="start"
+	xml:space="preserve"
+	stroke="#6D97AB">Erstellt:</text>
+  <text
+	id="label2"
+	fill="#000000"
+	stroke="#6D97AB"
+	stroke-width="0"
+	stroke-opacity="null"
+	fill-opacity="null"
+	x="29.5" y="369"
+	font-size="24"
+	font-family="Helvetica, Arial, sans-serif"
+	text-anchor="start"
+	xml:space="preserve">Bearbeiter:</text>
+  <text
+	id="bearbeiter"
+	fill="#000000"
+	stroke="#6D97AB"
+	stroke-width="0"
+	stroke-opacity="null"
+	fill-opacity="null"
+	x="203.5" y="369"
+	font-size="24"
+	font-family="Helvetica, Arial, sans-serif"
+	text-anchor="start"
+	xml:space="preserve">paulraktikant</text>
+  <text
+	id="erstellzeit"
+	fill="#000000"
+	stroke-width="0"
+	stroke-opacity="null"
+	fill-opacity="null"
+	x="203.5" y="322"
+	font-size="24"
+	font-family="Helvetica, Arial, sans-serif"
+	text-anchor="start"
+	xml:space="preserve"
+	stroke="#6D97AB">15.02.2018, 06:42 Uhr</text>
+  <text
+	id="titel"
+	xml:space="preserve"
+	text-anchor="start"
+	font-family="Helvetica, Arial, sans-serif"
+	font-size="30"
+	y="54.5" x="31.5" 
+	stroke-width="0" 
+	stroke="#000" 
+	fill="#000000" 
+	font-weight="bold">Kaffee kochen</text>
+  <text
+	id="beschreibung" 
+	xml:space="preserve" 
+	text-anchor="start" 
+	font-family="Helvetica, Arial, sans-serif" 
+	font-size="26" 
+	y="123.5" x="31.5" 
+	stroke-width="0" 
+	fill="#000000" 
+	transform="matrix(0.9960949420928954,0,0,1,-0.8769906759262084,0) "
+	stroke="#000"></text>
+  <rect
+	id="delete_space"
+	fill="#ff3f3f"
+	stroke-width="1.5"
+	stroke-opacity="null"
+	x="484.5" y="15.5"
+	width="78" height="69"
+	stroke="#6D97AB"
+	opacity="0"/>
+ </g>
+</svg>

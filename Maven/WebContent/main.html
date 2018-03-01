@@ -7,7 +7,6 @@
 			<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css">
 			<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
 			<script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"></script>
-			<script src="UsernameExtraction.js"></script>
 			<link rel="stylesheet" href="style.css">
 		</head>
 		<body>
@@ -142,24 +141,23 @@
 
 			</div>
 			<script>
-				$("#usr_confirm").click(function(){
-					var usr_name = $("#usr_name").val();
-					var group_id = $("#...").val();
-					var url = "http://localhost:8080/DoItLater/AddUserToGroup?name="+usr_name+"&id="+group_id;
-					$.post(url, function(data){
-						alert(data);
-						$("#usr_name").val("");
+					var uid = 1;
+					var gid = 1;
+					var url = "http://localhost:8080/DoItLater/DatabaseTest?uid="+uid+"&gid="+gid;
+					$("#usr_confirm").click(function(){
+						$.post(url, function(data){
+							alert(data);
+						});	
 					});
-				});
-				
-				$("#add_group").click(function(){
-					var groupname = $("#group_name").val();
-					var username = $("#...").val();
-					$.post("http://localhost:8080/DoItLater/CreateGroup?group_name="+groupname+"&user_name="+username, function(data){
-						alert(data);
-						$("#group_name").val("");
+					
+					$("#add_group").click(function(){
+						var name = $("#group_name").val();
+						var url = "http://localhost:8080/DoItLater/CreateGroup?gname="+name+"&uid="+uid;
+						$.post(url, function(data){
+							alert(data);
+							$("#group_name").val("");
+						});
 					});
-				});
 
 </script>
 		</body>

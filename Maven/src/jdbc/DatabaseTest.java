@@ -8,16 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class CreateGroup
+ * Servlet implementation class DatabaseTest
  */
-@WebServlet("/AddUser")
-public class AddUserToGroup extends HttpServlet {
+@WebServlet("/DatabaseTest")
+public class DatabaseTest extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public AddUserToGroup() {
+    public DatabaseTest() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -33,26 +34,26 @@ public class AddUserToGroup extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// Parameter
 		jdbcConnector jd = new jdbcConnector();
 		String res = "";
 		String uid = request.getParameter("uid");
 		String gid = request.getParameter("gid");
+		//String query = "SELECT * FROM `GROUP`";
 		String query = "INSERT INTO `USER_IN_GROUP` VALUES ('"+uid+"', '"+gid+"');";
+		//String query = "SELECT * FROM USER";
+		//String query = "INSERT INTO `GROUP` VALUES (1, 'Testuser', 1);";
+		//String query = "SELECT * FROM USER_IN_GROUP";
 		res = jd.query(query);
-		if(jd != null && uid != null && gid != null) {
-			if(res != null) {
-				response.getWriter().append(res);
-				return;
-			}
-			else {
-				response.getWriter().append("Fehler! Mitglied konnte nicht hinzugefügt werden.");
-				return;
-			}
-		}else {
-			response.getWriter().append("Ups, etwas ist wohl schief gelaufen. Probiere es später erneut!");
+		if(res != null) {
+			response.getWriter().append(res);
+			return;
+		}
+		else {
+			response.getWriter().append("Fehler");
 			return;
 		}
 		
+		
 	}
+
 }
