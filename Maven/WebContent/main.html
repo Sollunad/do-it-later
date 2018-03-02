@@ -141,9 +141,9 @@
 
 			</div>
 			<script>
-					var uid = 1;
+					var uid = 3;
 					var gid = 1;
-					var url = "http://localhost:8080/DoItLater/DatabaseTest?uid="+uid+"&gid="+gid;
+					var url = "http://localhost:8080/DoItLater/AddUser?uid="+uid+"&gid="+gid;
 					$("#usr_confirm").click(function(){
 						$.post(url, function(data){
 							alert(data);

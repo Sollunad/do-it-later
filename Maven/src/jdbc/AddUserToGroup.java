@@ -38,9 +38,18 @@ public class AddUserToGroup extends HttpServlet {
 		String res = "";
 		String uid = request.getParameter("uid");
 		String gid = request.getParameter("gid");
-		String query = "INSERT INTO `USER_IN_GROUP` VALUES ('"+uid+"', '"+gid+"');";
-		res = jd.query(query);
-		if(jd != null && uid != null && gid != null) {
+		String query = "SELECT fk_UserID, fk_GroupID FROM USER_IN_GROUP WHERE fk_UserID="+uid+" AND fk_GroupID="+gid;
+		//String query = "INSERT INTO `USER_IN_GROUP` VALUES ('"+uid+"', '"+gid+"');";
+		if(uid == null || gid == null) {
+			response.getWriter().append("Ups, etwas ist wohl schief gelaufen. Probiere es später erneut!");
+			return;
+		}
+		if(jd != null)
+			res = jd.query(query);
+			System.out.println(res);
+		if(res == "null" && jd != null) {
+			query = "INSERT INTO `USER_IN_GROUP` VALUES ('"+uid+"', '"+gid+"');";
+			res = jd.query(query); 
 			if(res != null) {
 				response.getWriter().append(res);
 				return;
@@ -50,9 +59,13 @@ public class AddUserToGroup extends HttpServlet {
 				return;
 			}
 		}else {
-			response.getWriter().append("Ups, etwas ist wohl schief gelaufen. Probiere es später erneut!");
+			response.getWriter().append("User ist bereits in der Gruppe!");
 			return;
 		}
 		
 	}
 }
+
+/*
+ * TODO: Prüfen, ob Kombination in Tabelle bereits vorhanden => Wenn ja, Meldung ausgeben
+ */
