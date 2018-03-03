@@ -19,6 +19,12 @@ public class User extends DatabaseObject {
 		this.name = name;
 		this.password = "";
 	}
+	
+	public User(int id, String name, String password) {
+		this.id = id;
+		this.name = name;
+		this.password = password;
+	}
 
 	public int getId() {
 		return id;
@@ -42,7 +48,7 @@ public class User extends DatabaseObject {
 		return boards;
 	}
 
-	public static User getUser(String name) {
+	public static User getByName(String name) {
 		String queryString = String
 				.format("SELECT id AS id, name AS name FROM User WHERE name=%s;", name);
 		try {
@@ -70,7 +76,7 @@ public class User extends DatabaseObject {
 		}
 	}
 
-	public static User getAssignedUser(Card card) {
+	public static User getAssigned(Card card) {
 		String queryString = String.format("SELECT User.id AS id, User.name AS name FROM User "
 				+ "JOIN Card ON User.ID=Card.assignment " + "WHERE Card.ID=%s;", card.getId());
 		try {
@@ -83,7 +89,7 @@ public class User extends DatabaseObject {
 		}
 	}
 
-	public static List<User> getAllUsersFromBoard(Board board) {
+	public static List<User> getAllUsers(Board board) {
 		String queryString = String.format(
 				"SELECT User.id AS id, User.name AS name FROM rel_User_Board "
 						+ "JOIN User ON rel_User_Board.user_id=User.ID " + "WHERE rel_User_Board.board_id=%s;",

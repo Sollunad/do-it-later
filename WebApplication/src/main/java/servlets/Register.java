@@ -27,7 +27,7 @@ public class Register {
 	@GET
 	@Path("/{name}")
 	public User getUser(@PathParam("name") String name) {		
-		return User.getUser(name);
+		return User.getByName(name);
 	}
 	
 
