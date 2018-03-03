@@ -42,7 +42,7 @@ public class Board extends DatabaseObject {
 
 	// TODO
 	public void setUsers() {
-		this.users = User.getAllUsersFromBoard(this);
+		this.users = User.getAllUsers(this);
 	}
 
 	// TODO
