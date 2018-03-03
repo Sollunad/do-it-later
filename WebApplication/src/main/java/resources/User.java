@@ -19,7 +19,7 @@ public class User extends DatabaseObject {
 		this.name = name;
 		this.password = "";
 	}
-	
+
 	public User(int id, String name, String password) {
 		this.id = id;
 		this.name = name;
@@ -48,9 +48,21 @@ public class User extends DatabaseObject {
 		return boards;
 	}
 
+	public static List<User> getAll() {
+		String queryString = "SELECT UserID AS id, Username AS name, Password AS password FROM USER;";
+		try {
+			String resultString = jdbcConnector.query(queryString);
+			Gson gson = new Gson();
+			User[] userArray = gson.fromJson(resultString, User[].class);
+			return new ArrayList<>(Arrays.asList(userArray));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public static User getByName(String name) {
-		String queryString = String
-				.format("SELECT id AS id, name AS name FROM User WHERE name=%s;", name);
+		String queryString = String.format("SELECT id AS id, name AS name FROM User WHERE name=%s;", name);
 		try {
 			String resultString = jdbcConnector.query(queryString);
 			if (resultString == null)
@@ -91,8 +103,8 @@ public class User extends DatabaseObject {
 
 	public static List<User> getAllUsers(Board board) {
 		String queryString = String.format(
-				"SELECT User.id AS id, User.name AS name FROM rel_User_Board "
-						+ "JOIN User ON rel_User_Board.user_id=User.ID " + "WHERE rel_User_Board.board_id=%s;",
+				"SELECT USER.UserID AS id, USER.Username AS name FROM USER_IN_GROUP "
+						+ "JOIN USER ON USER_IN_GROUP.fk_UserID=USER.UserID " + "WHERE USER_IN_GROUP.fk_GroupID=%d;",
 				board.getId());
 		try {
 			String resultString = jdbcConnector.query(queryString);
@@ -107,12 +119,12 @@ public class User extends DatabaseObject {
 
 	@Override
 	public void query() {
-		//TODO
+		// TODO
 	}
 
 	@Override
 	public void delete() {
-		String deleteString = String.format("DELETE FROM User WHERE name=%s AND password=%s;", this.name,
+		String deleteString = String.format("DELETE FROM USER WHERE Username=%s AND Password=%s;", this.name,
 				this.password);
 		try {
 			jdbcConnector.query(deleteString);
@@ -123,11 +135,10 @@ public class User extends DatabaseObject {
 
 	@Override
 	public boolean exists() {
-		String queryString = String
-				.format("SELECT id AS id, name AS name FROM User WHERE name=%s;", name);
+		String queryString = String.format("SELECT UserID AS id, Username AS name FROM USER WHERE Username=%s;", name);
 		try {
 			String resultString = jdbcConnector.query(queryString);
-			return  (resultString != null);
+			return (resultString != null);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
@@ -136,7 +147,7 @@ public class User extends DatabaseObject {
 
 	@Override
 	public void persist() {
-		String updateString = String.format("INSERT INTO table (name, password) VALUES(%s, %s);", this.name,
+		String updateString = String.format("INSERT INTO table (Username, Password) VALUES('%s', '%s');", this.name,
 				this.password);
 		try {
 			jdbcConnector.query(updateString);
@@ -147,13 +158,18 @@ public class User extends DatabaseObject {
 
 	public void register() {
 		String updateString = String.format(
-				"INSERT INTO table (name, password) VALUES(%s, %s) ON DUPLICATE KEY UPDATE name=%s, password=%s;",
-				this.name, this.password, this);
+				"INSERT INTO USER (Username, Password) VALUES('%s', '%s') ON DUPLICATE KEY UPDATE Username=%s, Password=%s;",
+				this.name, this.password);
 		try {
 			jdbcConnector.query(updateString);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public String toString() {
+		return String.format("User: [id=%d, name=%s, password=%s]", this.id, this.name, this.password);
 	}
 
 }

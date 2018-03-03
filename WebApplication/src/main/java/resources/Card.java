@@ -81,25 +81,31 @@ public class Card extends DatabaseObject {
 	@Override
 	public void query() {
 		// TODO Auto-generated method stub
-	
+
 	}
 
 	@Override
 	public void persist() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public boolean exists() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Card: [id=%d, title=%s, content=%s, status=%s, assignment=%s]", this.id, this.title,
+				this.content, this.status, this.assignment);
 	}
 
 }
