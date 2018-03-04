@@ -15,11 +15,6 @@ public class Task extends DatabaseObject {
 	private String description;
 	private TaskStatus status;
 	private int group;
-
-	public static void main(String[] args) {
-		Task task = Task.getById(1);
-		System.out.println(task);
-	}
 	
 	public String toString() {
 		return id + " " + title + " " + description + " " + status + " " + group;
@@ -102,7 +97,7 @@ public class Task extends DatabaseObject {
 
 	@Override
 	public void persist() {
-		String updateString = String.format("INSERT INTO `TASK`(`Titel`, `Beschreibung`, `Status`, `fk_GroupID`) VALUES (%s,%s,%s,%d);", 
+		String updateString = String.format("INSERT INTO `TASK`(`Titel`, `Beschreibung`, `Status`, `fk_GroupID`) VALUES (\"%s\",\"%s\",\"%s\",%d);", 
 				title, description, status, group);
 		try {
 			jdbcConnector.query(updateString);
@@ -112,7 +107,7 @@ public class Task extends DatabaseObject {
 	}
 
 	public void register() {
-		String updateString = String.format("UPDATE `TASK` SET `Titel` = %s, `Beschreibung` = %s, `Status` = %s, `fk_GroupID` = %d WHERE `TaskID`=%d;", 
+		String updateString = String.format("UPDATE `TASK` SET `Titel` = \"%s\", `Beschreibung` = \"%s\", `Status` = \"%s\", `fk_GroupID` = %d WHERE `TaskID`=%d;", 
 				title, description, status, group, id);
 		try {
 			jdbcConnector.query(updateString);
