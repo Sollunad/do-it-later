@@ -1,6 +1,7 @@
 package jdbc;
 
 import java.io.IOException;
+import org.json.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,19 +36,35 @@ public class AddUserToGroup extends HttpServlet {
 		// TODO Auto-generated method stub
 		// Parameter
 		jdbcConnector jd = new jdbcConnector();
-		String res = "";
-		String uid = request.getParameter("uid");
+		JSONObject jo = null;
+		String res = null;
+		String uid_json = null;
+		String uid = null;
+		String uname = request.getParameter("uname");
 		String gid = request.getParameter("gid");
-		String query = "SELECT fk_UserID, fk_GroupID FROM USER_IN_GROUP WHERE fk_UserID="+uid+" AND fk_GroupID="+gid;
-		//String query = "INSERT INTO `USER_IN_GROUP` VALUES ('"+uid+"', '"+gid+"');";
-		if(uid == null || gid == null) {
-			response.getWriter().append("Ups, etwas ist wohl schief gelaufen. Probiere es später erneut!");
+		String query_get_uid = "SELECT UserID FROM USER WHERE Username="+uname;
+		System.out.println(gid);
+		if(jd == null || uname == "" || gid == "") {
+			response.getWriter().append("Etwas ist schiefgelaufen, versuche es später erneut!");
 			return;
 		}
-		if(jd != null)
-			res = jd.query(query);
-			System.out.println(res);
-		if(res == "null" && jd != null) {
+		
+		uid_json = jd.query(query_get_uid);
+		uid_json = uid_json.replace("[", "");
+		uid_json = uid_json.replace("]", "");
+		uid_json = uid_json.replace(" ", "");
+		try {
+			 jo = new JSONObject(uid_json);
+			uid = jo.getString("UserID");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			return;
+		}
+		String query = "SELECT fk_UserID, fk_GroupID FROM USER_IN_GROUP WHERE fk_UserID="+uid+" AND fk_GroupID="+gid;
+		res = jd.query(query);
+		if(res == null || res == "null" || res == "") {
 			query = "INSERT INTO `USER_IN_GROUP` VALUES ('"+uid+"', '"+gid+"');";
 			res = jd.query(query); 
 			if(res != null) {
@@ -67,5 +84,5 @@ public class AddUserToGroup extends HttpServlet {
 }
 
 /*
- * TODO: Prüfen, ob Kombination in Tabelle bereits vorhanden => Wenn ja, Meldung ausgeben
+ * TODO: JSON Objekt erzeugen und UserID herausziehen, danach Abfrage machen
  */

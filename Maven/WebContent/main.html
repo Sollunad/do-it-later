@@ -7,6 +7,7 @@
 			<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css">
 			<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
 			<script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"></script>
+			<script type="text/javascript" src="main.js"></script>
 			<link rel="stylesheet" href="style.css">
 		</head>
 		<body>
@@ -23,7 +24,7 @@
 							<li class="dropdown">
 								<a class="dropdown-toggle pointer" data-toggle="dropdown">Groups
 								<span class="caret"></span></a>
-								<ul class="dropdown-menu">
+								<ul class="dropdown-menu" id="Group_List">
 									<li><a href="">Group 1</a></li>
 									<li><a href="">Group 2</a></li>
 									<li><a href="">Group 3</a></li>
@@ -140,25 +141,5 @@
 				</div>
 
 			</div>
-			<script>
-					var uid = 3;
-					var gid = 1;
-					var url = "http://localhost:8080/DoItLater/AddUser?uid="+uid+"&gid="+gid;
-					$("#usr_confirm").click(function(){
-						$.post(url, function(data){
-							alert(data);
-						});	
-					});
-					
-					$("#add_group").click(function(){
-						var name = $("#group_name").val();
-						var url = "http://localhost:8080/DoItLater/CreateGroup?gname="+name+"&uid="+uid;
-						$.post(url, function(data){
-							alert(data);
-							$("#group_name").val("");
-						});
-					});
-
-</script>
 		</body>
 	</html>
