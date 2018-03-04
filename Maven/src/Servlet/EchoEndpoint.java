@@ -10,32 +10,30 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-
 @ServerEndpoint("/echo/{room}")
+
 public class EchoEndpoint {
 
-private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Session>()); 
-	
-@OnOpen
-public void open(Session session, @PathParam("room") String room) {
-	clients.add(session);
-}
-	
-@OnMessage
-public void echoTextMessage(Session session, String msg) {
-    try {
-    	synchronized (clients){
-    		for (Session client: clients) 
-				client.getBasicRemote().sendText(msg);
-        }
-    } catch (IOException e) {
-    	System.out.println("Can't send Message!");
-        try {
-            session.close();
-        } catch (IOException e1){}
-    }
-}
-
+	private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Session>()); 
+		
+	@OnOpen
+	public void open(Session session, @PathParam("room") String room) {
+		clients.add(session);
+		System.out.println("session openend and bound to room: " + room);
+	}
+		
+	@OnMessage
+	public void echoTextMessage(Session session, String msg) {
+		System.out.println(msg);
+		if(msg != "PING") {
+	    	synchronized (clients){
+	    		for (Session client: clients)
+					try {
+						client.getBasicRemote().sendText(msg);
+					} catch (IOException e) {}
+	        }
+		}
+	}
 
 }
 	

@@ -12,7 +12,6 @@ body{
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	overflow: hidden;
 	cursor: default;
 }
 
@@ -87,14 +86,6 @@ body{
 .panel-heading {
 	background-color: #3d6da7 !important;
 	color: white !important;
-}
-
-.chat_user:nth-child(odd){
-	color: lightgrey;
-}
-
-.chat_user:nth-child(even){
-	color: black;
 }
 
 .padding{
