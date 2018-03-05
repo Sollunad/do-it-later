@@ -1,6 +1,5 @@
 // ass. Array für alle SVGs (Key: Id, Value: SVG-Content-Objekt)
 var allSVG = {};
-console.log("FILE GEFUNDEN!");
 
 var cards = [
 	new Card('1', 'Datenbank aufsetzen', 'NoSQL = toll', 'done', 'jessejrichter', 'now'),
@@ -45,7 +44,6 @@ function Group(id, name, admin) {
 function appendSVG(card) {
 	allSVG[card.id] = card;
 	$.get("task.svg", null, (data) => {
-		console.log(data);
 		let cardId = "#" + card.id;
 		let wrapperId = "#" + statDiv[card.stat];
 		$("svg", data).prependTo(wrapperId);
@@ -73,8 +71,8 @@ function appendSVG(card) {
 			if (confirm("Delete Card?")) {
 				$(cardId).remove();
 			}
-		},'xml');		
-	});
+		});		
+	},'xml');
 }
 
 function updateSVG(cardId, card) {
