@@ -2,6 +2,8 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import com.google.gson.Gson;
@@ -29,10 +31,20 @@ class UserTest {
 		String jsonString = gson.toJson(users);
 		System.out.println(jsonString);
 		User[] fancyUsers = gson.fromJson(jsonString, User[].class);
-		for (int i = 0; i<fancyUsers.length; i++) {
+		for (int i = 0; i < fancyUsers.length; i++) {
 			assertEquals(users[i].getId(), fancyUsers[i].getId(), "ID stimmt nicht.");
 			assertEquals(users[i].getName(), fancyUsers[i].getName(), "Username stimmt nicht.");
 			assertEquals(users[i].getPassword(), fancyUsers[i].getPassword(), "Passwort stimmt nicht.");
+		}
+	}
+
+	@Test
+	void getAllUsersFromDB() {
+		List<User> users = User.getAll();
+		assertNotNull(users, "Users sind null!");
+		System.out.println("All Users From DB:");
+		for (User user : users) {
+			System.out.println("\t" + user.toString());
 		}
 	}
 }

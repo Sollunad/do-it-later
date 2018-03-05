@@ -16,8 +16,14 @@ public class Board extends DatabaseObject {
 	private List<User> users;
 	private List<Card> cards;
 
-	Board(String name) {
+	public Board(String name) {
 		this.name = name;
+	}
+
+	public Board(int id, String name, int admin) {
+		this.id = id;
+		this.name = name;
+		this.admin = admin;
 	}
 
 	public int getId() {
@@ -50,6 +56,19 @@ public class Board extends DatabaseObject {
 		this.cards = Card.getAllCardsFromBoard(this);
 	}
 
+	public static List<Board> getAll() {
+		String queryString = "SELECT GroupID AS id, GroupName AS name, fk_GroupAdmin AS admin FROM GROUP;";
+		try {
+			String resultString = jdbcConnector.query(queryString);
+			Gson gson = new Gson();
+			Board[] boards = gson.fromJson(resultString, Board[].class);
+			return new ArrayList<>(Arrays.asList(boards));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public static List<Board> getAllBoardsFromUser(User user) {
 		String queryString = String.format("SELECT Board.id AS ID, Board.name AS name, Board.admin AS admin "
 				+ "FROM rel_User_Board JOIN Board ON rel_User_Board.board_id=Board.id "
@@ -68,25 +87,30 @@ public class Board extends DatabaseObject {
 	@Override
 	public void query() {
 		// TODO Auto-generated method stub
-	
+
 	}
 
 	@Override
 	public void persist() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public boolean exists() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Board: [id=%d, name=%s, admin=%d]", this.id, this.name, this.admin);
 	}
 
 }
