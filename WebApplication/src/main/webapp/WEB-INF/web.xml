@@ -11,10 +11,13 @@
 		<servlet-class>servlets.LoginServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>RegisterServlet</servlet-name>
-		<display-name>RegisterServlet</display-name>
-		<description></description>
-		<servlet-class>servlets.RegisterServlet</servlet-class>
+		<servlet-name>unique_servlet_name</servlet-name>
+		<servlet-class>com.ibm.websphere.jaxrs.server.IBMRestServlet</servlet-class>
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>Java_class_name </param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LoginServlet</servlet-name>
@@ -25,7 +28,7 @@
 		<url-pattern>/RegisterServlet</url-pattern>
 	</servlet-mapping>
 	<mime-mapping>
-    	<extension>svg</extension>
-   		<mime-type>image/svg</mime-type>
+		<extension>svg</extension>
+		<mime-type>image/svg</mime-type>
 	</mime-mapping>
 </web-app>
