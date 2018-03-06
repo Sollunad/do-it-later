@@ -5,30 +5,23 @@
 <web-app>
 	<display-name>Archetype Created Web Application</display-name>
 	<servlet>
-		<servlet-name>LoginServlet</servlet-name>
-		<display-name>LoginServlet</display-name>
-		<description></description>
-		<servlet-class>servlets.LoginServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>unique_servlet_name</servlet-name>
-		<servlet-class>com.ibm.websphere.jaxrs.server.IBMRestServlet</servlet-class>
+		<servlet-name>REST-Servlet</servlet-name>
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		<init-param>
-			<param-name>javax.ws.rs.Application</param-name>
-			<param-value>Java_class_name </param-value>
+			<param-name>jersey.config.server.provider.packages</param-name>
+			<param-value>servlets</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>LoginServlet</servlet-name>
-		<url-pattern>/autheticate</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>RegisterServlet</servlet-name>
-		<url-pattern>/RegisterServlet</url-pattern>
+		<servlet-name>REST-Servlet</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
 	<mime-mapping>
 		<extension>svg</extension>
 		<mime-type>image/svg</mime-type>
 	</mime-mapping>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
 </web-app>
