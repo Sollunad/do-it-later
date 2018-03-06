@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Register - Do it later</title>
+<meta charset="utf-8" />
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab"
+	rel="stylesheet">
+<!-- Bootstrap einfügen! CSS, JQuery, JS in der Reihenfolge! -->
+<link rel="stylesheet"
+	href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+<script
+	src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="container-fluid col-lg-12">
+		<div class="page-header col-lg-8 col-lg-offset-2 center">
+			<h1>Register - Do It Later</h1>
+		</div>
+		<div class="container-fluid col-lg-4 col-lg-offset-4">
+			<div class="jumbotron col-lg-12">
+				<form class="form-horizontal col-lg-12">
+					<img class="img-rounded col-lg-6 col-lg-offset-3" id="Login_img"
+						src="login2.png">
+					<div class="form-group">
+						<label class="control-label col-lg-3 col-lg-offset-1" for="usr">Username:</label>
+						<div class="col-lg-7">
+							<input type="text" class="form-control" id="usr"
+								placeholder="Enter Username" name="usr">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-3 col-lg-offset-1" for="pwd">Password:</label>
+						<div class="col-lg-7">
+							<input type="password" class="form-control" id="pwd"
+								placeholder="Enter password" name="pwd">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-lg-3 col-lg-offset-1" for="pwd">Confirm
+							Password:</label>
+						<div class="col-lg-7">
+							<input type="password" class="form-control" id="pwdrep"
+								placeholder="Enter password" name="pwd">
+						</div>
+					</div>
+					<a href="index.html"><button
+							class="btn btn-primary col-lg-6 col-lg-offset-3"
+							id="Register_btn" type="button">Register</button></a>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		$("#Register_btn").click(() => {
+			let userName = $("#usr").val(),
+				password = $("#pwd").val(),
+				repeated = $("#pwdrep").val();
+			if (password == repeated) {
+				$.post("register", { name: userName, password: password },
+					(data, status) => {
+						if (data) { //TODO
+							alert("Registrierung erfolgreich!");
+							window.open("index.html");	
+						} else {
+							alert("Registrierung fehlgeschlagen!");
+						}
+					}
+				);				
+			} else {
+				alert("Passwörter stimmen nicht überein!");
+			}
+		});
+	</script>
+</body>
+</html>
