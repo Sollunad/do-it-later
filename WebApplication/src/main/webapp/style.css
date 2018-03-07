@@ -5,7 +5,7 @@ html {
 	padding: 0;
 }
 
-body{
+body {
 	-moz-user-select: none;
 	font-family: 'Roboto Slab', serif;
 	width: 100%;
@@ -16,22 +16,24 @@ body{
 	cursor: default;
 }
 
-.center{
+.center {
 	text-align: center;
 }
 
-#Login_img{
+#Login_img {
 	width: 40%;
 	height: auto;
 	padding: 0;
 	margin: 15px 0 15px 30%;
 }
 
-.pointer:hover{
+.pointer:hover {
 	cursor: pointer;
-}s
+}
 
-.Nav_elem_picked{
+s
+
+.Nav_elem_picked {
 	float: none;
 	list-style-type: none;
 	margin: 5px 0 5px 0;
@@ -47,13 +49,13 @@ body{
 	flex-direction: column;
 }
 
-#Task_List > div {
+#Task_List>div {
 	display: flex;
 	flex-wrap: wrap;
-	flex-direction: row;	
+	flex-direction: row;
 }
 
-#Task_List > div > svg {
+#Task_List>div>svg {
 	height: 300px;
 	width: 435px;
 	margin: 20px;
@@ -62,9 +64,9 @@ body{
 }
 
 #fixedButton {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
 	height: 60px;
 	width: 60px;
 	color: #ffffff;
@@ -74,23 +76,23 @@ body{
 	border-style: solid;
 }
 
-.message-bubble{
-    padding: 10px 0px 10px 0px;
+.message-bubble {
+	padding: 10px 0px 10px 0px;
 	margin: 2px 0 2px 0;
 	border-radius: 5px;
 }
 
-.message-bubble:nth-child(even){
+.message-bubble:nth-child(even) {
 	background-color: #EEEEEE;
 }
 
-.message-bubble:nth-child(odd){
+.message-bubble:nth-child(odd) {
 	background-color: #32a840;
 	color: white;
 }
 
-.message-bubble > *{
-    padding-left: 15px;
+.message-bubble>* {
+	padding-left: 15px;
 }
 
 .panel-body {
@@ -102,10 +104,10 @@ body{
 	color: white !important;
 }
 
-.chat_user:nth-child(odd){
+.chat_user:nth-child(odd) {
 	color: lightgrey;
 }
 
-.chat_user:nth-child(even){
+.chat_user:nth-child(even) {
 	color: black;
 }
