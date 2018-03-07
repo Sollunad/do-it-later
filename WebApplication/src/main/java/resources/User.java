@@ -1,12 +1,14 @@
 package resources;
 
 import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
 
+import database.MySQLConnector;
 import database.jdbcConnector;
 
 public class User extends DatabaseObject {
@@ -49,69 +51,106 @@ public class User extends DatabaseObject {
 	}
 
 	public static List<User> getAll() {
-		String queryString = "SELECT UserID AS id, Username AS name, Password AS password FROM USER;";
-		try {
-			String resultString = jdbcConnector.query(queryString);
-			Gson gson = new Gson();
-			User[] userArray = gson.fromJson(resultString, User[].class);
-			return new ArrayList<>(Arrays.asList(userArray));
-		} catch (IOException e) {
+		String sql = "SELECT name AS A, password AS B FROM user;";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			ResultSet rs = s.executeQuery();
+			List<User> result = new ArrayList<>();
+			while (rs.next()) {
+				String name = rs.getString("A");
+				String password = rs.getString("B");
+				User user = new User(name);
+				user.setPassword(password);
+				result.add(user);
+			}
+			return result;
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public static User getByName(String name) {
-		String queryString = String.format("SELECT id AS id, name AS name FROM User WHERE name=%s;", name);
-		try {
-			String resultString = jdbcConnector.query(queryString);
-			if (resultString == null)
-				return null;
-			Gson gson = new Gson();
-			return gson.fromJson(resultString, User.class);
-		} catch (IOException e) {
+	public static User getByName(String username) {
+		String sql = "SELECT * FROM user WHERE name=?;";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			s.setString(1, username);
+			ResultSet rs = s.executeQuery();
+			List<User> result = new ArrayList<>();
+			while (rs.next()) {
+				String name = rs.getString("name");
+				String password = rs.getString("password");
+				User user = new User(name);
+				user.setPassword(password);
+				result.add(user);
+			}
+			if (result.size() < 2)
+				return result.get(0);
+		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return null;
 	}
 
 	public static User getAdmin(Board board) {
-		String queryString = String.format("SELECT User.id AS id, User.name AS name FROM User "
-				+ "JOIN Board ON User.ID=Board.admin " + "WHERE Board.ID=%s;", board.getId());
-		try {
-			String resultString = jdbcConnector.query(queryString);
-			Gson gson = new Gson();
-			return gson.fromJson(resultString, User.class);
-		} catch (IOException e) {
+		String sql = "SELECT user.name AS A, user.password AS B FROM board "
+				+ "JOIN user ON board.admin=user.name WHERE board.id=?;";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			s.setInt(1, board.getId());
+			ResultSet rs = s.executeQuery();
+			List<User> result = new ArrayList<>();
+			while (rs.next()) {
+				String name = rs.getString("A");
+				String password = rs.getString("B");
+				User user = new User(name);
+				user.setPassword(password);
+				result.add(user);
+			}
+			if (result.size() < 2)
+				return result.get(0);
+		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return null;
 	}
 
 	public static User getAssigned(Card card) {
-		String queryString = String.format("SELECT User.id AS id, User.name AS name FROM User "
-				+ "JOIN Card ON User.ID=Card.assignment " + "WHERE Card.ID=%s;", card.getId());
-		try {
-			String resultString = jdbcConnector.query(queryString);
-			Gson gson = new Gson();
-			return gson.fromJson(resultString, User.class);
-		} catch (IOException e) {
+		String sql = "SELECT user.name AS A, user.password AS B FROM user "
+				+ "JOIN card ON user.name=card.bearbeiter WHERE card.id=?;";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			s.setInt(1, card.getId());
+			ResultSet rs = s.executeQuery();
+			List<User> result = new ArrayList<>();
+			while (rs.next()) {
+				String name = rs.getString("A");
+				String password = rs.getString("B");
+				User user = new User(name);
+				user.setPassword(password);
+				result.add(user);
+			}
+			if (result.size() < 2)
+				return result.get(0);
+		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return null;
 	}
 
 	public static List<User> getAllUsers(Board board) {
-		String queryString = String.format(
-				"SELECT USER.UserID AS id, USER.Username AS name FROM USER_IN_GROUP "
-						+ "JOIN USER ON USER_IN_GROUP.fk_UserID=USER.UserID " + "WHERE USER_IN_GROUP.fk_GroupID=%d;",
-				board.getId());
-		try {
-			String resultString = jdbcConnector.query(queryString);
-			Gson gson = new Gson();
-			User[] userArray = gson.fromJson(resultString, User[].class);
-			return new ArrayList<>(Arrays.asList(userArray));
-		} catch (IOException e) {
+
+		String sql = "SELECT user.name AS A, user.password AS B FROM user_in_boards "
+				+ "JOIN user ON user_in_boards.user_name=user.name WHERE user_in_boards.board_id=?;";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			s.setInt(1, board.getId());
+			ResultSet rs = s.executeQuery();
+			List<User> result = new ArrayList<>();
+			while (rs.next()) {
+				String name = rs.getString("A");
+				String password = rs.getString("B");
+				User user = new User(name);
+				user.setPassword(password);
+				result.add(user);
+			}
+			return result;
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -124,45 +163,51 @@ public class User extends DatabaseObject {
 
 	@Override
 	public void delete() {
-		String deleteString = String.format("DELETE FROM USER WHERE Username=%s AND Password=%s;", this.name,
-				this.password);
-		try {
-			jdbcConnector.query(deleteString);
-		} catch (IOException e) {
+		String sql = "DELETE FROM user WHERE name=? LIMIT 1";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			s.setString(1, this.name);
+			s.executeUpdate();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public boolean exists() {
-		String queryString = String.format("SELECT UserID AS id, Username AS name FROM USER WHERE Username=%s;", name);
-		try {
-			String resultString = jdbcConnector.query(queryString);
-			return (resultString != null);
-		} catch (IOException e) {
+		String sql = "SELECT name, password FROM user WHERE name=?;";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			s.setString(1, this.name);
+			ResultSet rs = s.executeQuery();
+			while (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
 		}
+		return false;
 	}
 
 	@Override
 	public void persist() {
-		String updateString = String.format("INSERT INTO table (Username, Password) VALUES('%s', '%s');", this.name,
-				this.password);
-		try {
-			jdbcConnector.query(updateString);
-		} catch (IOException e) {
+		String sql = "INSERT INTO user (name, password) VALUES (?, ?);";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			s.setString(1, this.name);
+			s.setString(2, this.password);
+			s.executeUpdate();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void register() {
-		String updateString = String.format(
-				"INSERT INTO USER (Username, Password) VALUES('%s', '%s') ON DUPLICATE KEY UPDATE Username=%s, Password=%s;",
-				this.name, this.password);
-		try {
-			jdbcConnector.query(updateString);
-		} catch (IOException e) {
+		String sql = "INSERT INTO user (name, password) VALUES (?, ?) ON DUPLICATE KEY UPDATE Username=?, Password=?;";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			s.setString(1, this.name);
+			s.setString(2, this.password);
+			s.setString(3, this.name);
+			s.setString(4, this.password);
+			s.executeUpdate();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}

@@ -46,7 +46,7 @@ public class Login {
 		return random.nextBoolean(); // ;)
 	}
 	
-	public boolean check(String name, String password) {
+	public static boolean check(String name, String password) {
 		User user = new User(name);
 		String hash = DigestUtils.sha256Hex(password);
 		user.setPassword(hash);
