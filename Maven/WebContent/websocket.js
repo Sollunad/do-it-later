@@ -4,6 +4,11 @@ var group;
 var timerID = 0; 
 
 $(function(){
+	$("#msg").keyup(function(event) {
+	    if (event.keyCode === 13) {
+	        send();
+	    }
+	});
 	
 	name = $("#username").text();
 	group = $("#act_group").text();
@@ -16,7 +21,6 @@ $(function(){
 
 	websocket.onopen = function(){
 		websocket.send(name + " joined the Room.");
-		keepAlive();
 	};
 
 	websocket.onerror = function(error){
@@ -26,27 +30,11 @@ $(function(){
 	websocket.onmessage = function(event){
 		$("#outputtext").append("<div class='row message-bubble col-lg-12'>\n<p>"+ event.data +"</p>\n</div>");
 	};
-	
-	websocket.onclose = function(){
-		cancelAlive();
-	};
+
 });
 
 function send(){
 	var message = $("#msg").val();
 	websocket.send(name + ": " + message);
-};
-
-function keepAlive() { 
-    var timeout = 1000;  
-    if (websocket.readyState == websocket.OPEN) {  
-    	websocket.send("PING");  
-    }  
-    timerID = setTimeout(keepAlive, timeout);  
-};
-
-function cancelAlive() {  
-    if (timerID) {  
-        clearTimeout(timerID);  
-    }  
+	$("#msg").val("");
 };
