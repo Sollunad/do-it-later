@@ -1,7 +1,6 @@
 var websocket;
 var name;
 var group;
-var timerID = 0; 
 
 $(function(){
 	$("#msg").keyup(function(event) {
