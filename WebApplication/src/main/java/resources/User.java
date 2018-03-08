@@ -12,7 +12,6 @@ import database.MySQLConnector;
 import database.jdbcConnector;
 
 public class User extends DatabaseObject {
-	private int id;
 	private String name;
 	private String password;
 	private List<Board> boards;
@@ -22,14 +21,9 @@ public class User extends DatabaseObject {
 		this.password = "";
 	}
 
-	public User(int id, String name, String password) {
-		this.id = id;
+	public User(String name, String password) {
 		this.name = name;
 		this.password = password;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String getName() {
@@ -41,9 +35,7 @@ public class User extends DatabaseObject {
 	}
 
 	public void setPassword(String password) {
-		if (this.password != "") {
-			this.password = password;
-		}
+		this.password = password;
 	}
 
 	public List<Board> getBoards() {
@@ -90,52 +82,7 @@ public class User extends DatabaseObject {
 		return null;
 	}
 
-	public static User getAdmin(Board board) {
-		String sql = "SELECT user.name AS A, user.password AS B FROM board "
-				+ "JOIN user ON board.admin=user.name WHERE board.id=?;";
-		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
-			s.setInt(1, board.getId());
-			ResultSet rs = s.executeQuery();
-			List<User> result = new ArrayList<>();
-			while (rs.next()) {
-				String name = rs.getString("A");
-				String password = rs.getString("B");
-				User user = new User(name);
-				user.setPassword(password);
-				result.add(user);
-			}
-			if (result.size() < 2)
-				return result.get(0);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	public static User getAssigned(Card card) {
-		String sql = "SELECT user.name AS A, user.password AS B FROM user "
-				+ "JOIN card ON user.name=card.bearbeiter WHERE card.id=?;";
-		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
-			s.setInt(1, card.getId());
-			ResultSet rs = s.executeQuery();
-			List<User> result = new ArrayList<>();
-			while (rs.next()) {
-				String name = rs.getString("A");
-				String password = rs.getString("B");
-				User user = new User(name);
-				user.setPassword(password);
-				result.add(user);
-			}
-			if (result.size() < 2)
-				return result.get(0);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	public static List<User> getAllUsers(Board board) {
-
 		String sql = "SELECT user.name AS A, user.password AS B FROM user_in_boards "
 				+ "JOIN user ON user_in_boards.user_name=user.name WHERE user_in_boards.board_id=?;";
 		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
@@ -186,6 +133,21 @@ public class User extends DatabaseObject {
 		}
 		return false;
 	}
+	
+	public boolean login() {
+		String sql = "SELECT name, password FROM user WHERE name=? AND password=?;";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			s.setString(1, this.name);
+			s.setString(2, this.password);
+			ResultSet rs = s.executeQuery();
+			while (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 	@Override
 	public void persist() {
@@ -214,7 +176,7 @@ public class User extends DatabaseObject {
 
 	@Override
 	public String toString() {
-		return String.format("User: [id=%d, name=%s, password=%s]", this.id, this.name, this.password);
+		return String.format("User: [name=%s, password=%s]", this.name, this.password);
 	}
 
 }

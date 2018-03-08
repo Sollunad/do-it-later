@@ -1,7 +1,6 @@
 package servlets;
 
 import javax.ws.rs.PathParam;
-import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -22,8 +21,6 @@ import resources.Validation;
 @Produces(MediaType.APPLICATION_JSON)
 public class TaskServlet {
 	
-	@Context
-	private ServletContext context; 
 	@GET
 	@Path("/{id}")
 	public Task getTask(@PathParam("id") int id) {		

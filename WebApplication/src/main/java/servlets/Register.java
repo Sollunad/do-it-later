@@ -1,7 +1,6 @@
 package servlets;
 
 import javax.ws.rs.PathParam;
-import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -20,9 +19,6 @@ import resources.Validation;
 @Path("/register")
 @Produces(MediaType.APPLICATION_JSON)
 public class Register {
-	
-	@Context
-	private ServletContext context; 
 	
 	@GET
 	@Path("/{name}")

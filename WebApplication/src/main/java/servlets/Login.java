@@ -3,7 +3,6 @@ package servlets;
 import java.util.Random;
 
 import javax.ws.rs.PathParam;
-import javax.servlet.ServletContext;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -21,18 +20,17 @@ import resources.User;
 @Path("/authenticate")
 @Produces(MediaType.APPLICATION_JSON)
 public class Login {
-
-	@Context
-	private ServletContext context;
-
 	@GET
 	public String getCustomer() {
-		return "HEUTE NICHT!";
+		return "HEUTE NICHT MEHR!";
 	}
 
 	@POST
 	public boolean postLogin(@FormParam("name") String name, @FormParam("password") String password) {
-		return check(name, password);
+		System.out.println("LOGIN-REQUEST: " + name + ", " + password);
+		boolean answer = check(name, password);
+		System.out.println("LOGIN-ANSWER: " + answer);
+		return answer;
 	}
 
 	@PUT
@@ -50,6 +48,6 @@ public class Login {
 		User user = new User(name);
 		String hash = DigestUtils.sha256Hex(password);
 		user.setPassword(hash);
-		return user.exists();
+		return user.login();
 	}
 }
