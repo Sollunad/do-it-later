@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: doitlater
 -- ------------------------------------------------------
--- Server version	5.7.21-log
+-- Server version	5.7.19-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,13 +29,14 @@ CREATE TABLE `card` (
   `status` varchar(12) DEFAULT NULL,
   `board` int(10) unsigned NOT NULL,
   `bearbeiter` varchar(20) DEFAULT NULL,
+  `timestamp` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `board_idx` (`board`),
   KEY `bearbeiter_idx` (`bearbeiter`),
   CONSTRAINT `bearbeiter` FOREIGN KEY (`bearbeiter`) REFERENCES `user` (`name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `board` FOREIGN KEY (`board`) REFERENCES `board` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +45,7 @@ CREATE TABLE `card` (
 
 LOCK TABLES `card` WRITE;
 /*!40000 ALTER TABLE `card` DISABLE KEYS */;
-INSERT INTO `card` VALUES (1,'Sachen machen','ZACK! ZACK!','DONE',1,NULL),(2,'Sauber machen','FLOTT FLOTT!','OPEN',1,NULL),(3,'Faxen machen','Feix Feix!','WORKING',2,NULL),(4,'AGIEREN','JETZT!','OPEN',2,NULL);
+INSERT INTO `card` VALUES (1,'Sachen machen','ZACK! ZACK!','DONE',1,NULL,NULL),(2,'Sauber machen','FLOTT FLOTT!','OPEN',1,NULL,NULL),(3,'Faxen machen','Feix Feix!','WORKING',2,NULL,NULL),(4,'AGIEREN','JETZT!','OPEN',2,NULL,NULL);
 /*!40000 ALTER TABLE `card` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-07 22:58:49
+-- Dump completed on 2018-03-08 22:49:51

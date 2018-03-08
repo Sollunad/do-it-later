@@ -1,18 +1,22 @@
 package resources;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
 
+import database.MySQLConnector;
 import database.jdbcConnector;
 
 public class Board extends DatabaseObject {
 	private int id;
 	private String name;
-	private int admin;
+	private String admin;
 	private List<User> users;
 	private List<Card> cards;
 
@@ -20,7 +24,7 @@ public class Board extends DatabaseObject {
 		this.name = name;
 	}
 
-	public Board(int id, String name, int admin) {
+	public Board(int id, String name, String admin) {
 		this.id = id;
 		this.name = name;
 		this.admin = admin;
@@ -34,7 +38,7 @@ public class Board extends DatabaseObject {
 		return name;
 	}
 
-	public int getAdmin() {
+	public String getAdmin() {
 		return admin;
 	}
 
@@ -55,30 +59,65 @@ public class Board extends DatabaseObject {
 	public void setCards() {
 		this.cards = Card.getAllCardsFromBoard(this);
 	}
+	
+	public void add(User user) {
+		String sql = "INSERT INTO user_in_boards (user_name, board_id) VALUES (?, ?);";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			s.setString(1, user.getName());
+			s.setInt(2, this.id);
+			s.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void remove(User user) {
+		String sql = "DELETE FROM user_in_boards WHERE user_name=? AND board_id=? LIMIT 1;";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			s.setString(1, user.getName());
+			s.setInt(2, this.id);
+			s.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static List<Board> getAll() {
-		String queryString = "SELECT GroupID AS id, GroupName AS name, fk_GroupAdmin AS admin FROM GROUP;";
-		try {
-			String resultString = jdbcConnector.query(queryString);
-			Gson gson = new Gson();
-			Board[] boards = gson.fromJson(resultString, Board[].class);
-			return new ArrayList<>(Arrays.asList(boards));
-		} catch (IOException e) {
+		String sql = "SELECT * FROM board;";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			ResultSet rs = s.executeQuery();
+			List<Board> result = new ArrayList<>();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				String admin = rs.getString("admin");
+				Board board = new Board(id, name, admin);
+				result.add(board);
+			}
+			return result;
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
 	public static List<Board> getAllBoardsFromUser(User user) {
-		String queryString = String.format("SELECT Board.id AS ID, Board.name AS name, Board.admin AS admin "
-				+ "FROM rel_User_Board JOIN Board ON rel_User_Board.board_id=Board.id "
-				+ "WHERE rel_User_Board.user_id=%s", user.getId());
-		try {
-			String resultString = jdbcConnector.query(queryString);
-			Gson gson = new Gson();
-			Board[] boardArray = gson.fromJson(resultString, Board[].class);
-			return new ArrayList<>(Arrays.asList(boardArray));
-		} catch (IOException e) {
+		String sql = "SELECT board.id AS A, board.name AS B, board.admin AS C "
+				+ "FROM user_in_boards JOIN board ON user_in_boards.board_id=board.id "
+				+ "WHERE user_in_boards.user_name=?;";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			s.setString(1, user.getName());
+			ResultSet rs = s.executeQuery();
+			List<Board> result = new ArrayList<>();
+			while (rs.next()) {
+				int id = rs.getInt("A");
+				String name = rs.getString("B");
+				String admin = rs.getString("C");
+				Board board = new Board(id, name, admin);
+				result.add(board);
+			}
+			return result;
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -110,7 +149,7 @@ public class Board extends DatabaseObject {
 
 	@Override
 	public String toString() {
-		return String.format("Board: [id=%d, name=%s, admin=%d]", this.id, this.name, this.admin);
+		return String.format("Board: [id=%d, name=%s, admin=%s]", this.id, this.name, this.admin);
 	}
 
 }

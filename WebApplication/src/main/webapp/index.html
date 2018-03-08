@@ -31,20 +31,22 @@
 									<input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
 								</div>
 							</div>
-							<a href ="main.html"><button class="btn btn-primary col-lg-6 col-lg-offset-3" id="Login_btn" type="button">Log In</button></a>
+							<button class="btn btn-primary col-lg-6 col-lg-offset-3" id="Login_btn" type="button">Log In</button>
 							<a href ="register.html"><button class="btn btn-default col-lg-6 col-lg-offset-3" id="Register_btn" type="button">Register</button></a>
 						</form>
 					</div>
 				</div>
 			</div>
 			<script>
+				console.log("Version 180306-1749");
 				$("#Login_btn").click(() => {
 					let userName = $("#usr").val(),
 						password = $("#pwd").val();
-					$.post("authenticate", { name: userName, password: password },
+					$.post("rest/authenticate", { "name": userName, "password": password },
 						(data, status) => {
 							if (data) { //TODO
-								moveToNextWindow(name);		
+								console.log(data);
+								//moveToNextWindow(name);		
 							} else {
 								alert("Login fehlgeschlagen!");
 							}
