@@ -2,6 +2,7 @@ package servlets;
 
 import javax.ws.rs.PathParam;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.ws.rs.Consumes;
@@ -33,9 +34,9 @@ public class TaskServlet {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String addTask(@PathParam("title") String title, @PathParam("description") String description, @PathParam("status") String status, @PathParam("group") int group, @PathParam("status") String bearbeiter) {
 		Date timestamp = new Date();
-		String tsString = timestamp.toLocaleString();
+		String timeStamp = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date());
 		User bearbeiterUser = User.getByName(bearbeiter);
-		Task task = new Task(title, description, status, bearbeiterUser, group, tsString);
+		Task task = new Task(title, description, status, bearbeiterUser, group, timeStamp);
 		task.persist();
 		return "success";
 	}
