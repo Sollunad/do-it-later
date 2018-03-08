@@ -1,21 +1,20 @@
 package servlets;
 
 import javax.ws.rs.PathParam;
+
+import java.util.Date;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import resources.Task;
-import resources.TaskStatus;
-import resources.Validation;
+import resources.User;
 
 @Path("/task")
 @Produces(MediaType.APPLICATION_JSON)
@@ -29,22 +28,30 @@ public class TaskServlet {
 	
 
 	@POST
-	@Path("/{title}/{description}/{status}/{group}")
+	@Path("/{title}/{description}/{status}/{group}/{bearbeiter}")
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String addTask(@FormParam("title") String title, @FormParam("description") String description, @FormParam("status") TaskStatus status, @FormParam("group") int group) {
-		Task task = new Task(title, description, status, group);
+	public String addTask(@PathParam("title") String title, @PathParam("description") String description, @PathParam("status") String status, @PathParam("group") int group, @PathParam("status") String bearbeiter) {
+		Date timestamp = new Date();
+		String tsString = timestamp.toLocaleString();
+		User bearbeiterUser = User.getByName(bearbeiter);
+		Task task = new Task(title, description, status, bearbeiterUser, group, tsString);
 		task.persist();
 		return "success";
 	}
 	
 	@PUT
-	@Path("/{id}/{title}/{description}/{status}/{group}")
+	@Path("/{id}/{title}/{description}/{status}/{group}/{bearbeiter}")
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String updateTask(@FormParam("id") int id, @FormParam("title") String title, @FormParam("description") String description, @FormParam("status") TaskStatus status, @FormParam("group") int group) {
-		Task task = new Task(id, title, description, status, group);
-		task.register();
+	public String updateTask(@PathParam("id") int id, @PathParam("title") String title, @PathParam("description") String description, @PathParam("status") String status, @PathParam("group") int group, @PathParam("status") String bearbeiter) {
+		Task oldTask = Task.getById(id);
+		oldTask.setTitle(title);
+		oldTask.setDescription(description);
+		oldTask.setStatus(status);
+		oldTask.setGroup(group);
+		oldTask.setBearbeiter(User.getByName(bearbeiter));
+		oldTask.register();
 		return "success";
 	}
 	
@@ -52,7 +59,7 @@ public class TaskServlet {
 	@Path("/{id}")
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteTask(@FormParam("id") int id) {
+	public String deleteTask(@PathParam("id") int id) {
 		Task task = Task.getById(id);
 		task.delete();
 		return "sucess";
