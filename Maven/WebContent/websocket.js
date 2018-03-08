@@ -1,7 +1,6 @@
 var websocket;
 var name;
 var group;
-var timerID = 0; 
 
 $(function(){
 	
@@ -24,7 +23,9 @@ $(function(){
 	};
 
 	websocket.onmessage = function(event){
-		$("#outputtext").append("<div class='row message-bubble col-lg-12'>\n<p>"+ event.data +"</p>\n</div>");
+		if(event.data != ""){
+			$("#outputtext").append("<div class='row message-bubble col-lg-12'>\n<p>"+ event.data +"</p>\n</div>");
+		}
 	};
 	
 	websocket.onclose = function(){
@@ -40,7 +41,7 @@ function send(){
 function keepAlive() { 
     var timeout = 1000;  
     if (websocket.readyState == websocket.OPEN) {  
-    	websocket.send("PING");  
+    	websocket.send("");  
     }  
     timerID = setTimeout(keepAlive, timeout);  
 };

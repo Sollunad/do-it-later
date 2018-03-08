@@ -24,15 +24,12 @@ public class EchoEndpoint {
 		
 	@OnMessage
 	public void echoTextMessage(Session session, String msg) {
-		System.out.println(msg);
-		if(msg != "PING") {
-	    	synchronized (clients){
-	    		for (Session client: clients)
-					try {
-						client.getBasicRemote().sendText(msg);
-					} catch (IOException e) {}
-	        }
-		}
+    	synchronized (clients){
+    		for (Session client: clients)
+				try {
+					client.getBasicRemote().sendText(msg);
+				} catch (IOException e) {}
+        }
 	}
 
 }
