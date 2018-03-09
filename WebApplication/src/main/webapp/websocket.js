@@ -1,11 +1,13 @@
 var websocket;
 var name;
 var group;
+var timerID = 0;
+
 
 $(function(){
 	
-	name = $("#username").text();
-	group = $("#act_group").text();
+	name = sessionStorage.getItem("userName");
+	group = sessionStorage.getItem("activeGroup");
 	
 	if ("WebSocket" in window){
 		websocket = new WebSocket("ws://localhost:8080/WebSockets/echo/" + group);

@@ -22,7 +22,7 @@
 					<a class="navbar-brand" href="main.html">Do It Later</a>
 				</div>
 				<ul class="nav navbar-nav">
-					<li class="navbar-text">Selected Group</li>
+					<li class="navbar-text" id="Active_Group">Active Group</li>
 					<li class="pointer"><a data-toggle="modal"
 						data-target="#addMemberModal">Add User</a></li>
 					<li class="dropdown"><a class="dropdown-toggle pointer"
@@ -33,13 +33,14 @@
 					<li><a href="chat.html" target="_blank">Group Chat</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li class="navbar-text"><span class="glyphicon glyphicon-user"></span>
+					<li class="navbar-text" id="Username_Main"><span class="glyphicon glyphicon-user"></span>
 						Max Mustermann</li>
 					<li><a href="index.html"><span
 							class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 				</ul>
 			</div>
 		</nav>
+		
 
 		<div id="Task_List">
 			<div id="open_tasks"></div>
@@ -48,10 +49,7 @@
 		</div>
 
 		<script src="script.js"></script>
-		<script>
-					multipleCards(cards);
-					multipleGroups(groups);
-				</script>
+		<script src="main.js"></script>
 
 		<button id="fixedButton" data-toggle="modal"
 			data-target="#newCardModal">+</button>
