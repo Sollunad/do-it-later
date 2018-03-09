@@ -15,6 +15,7 @@ public class User extends DatabaseObject {
 	private String name;
 	private String password;
 	private List<Board> boards;
+	
 
 	public User(String name) {
 		this.name = name;
