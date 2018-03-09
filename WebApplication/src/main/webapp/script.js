@@ -75,6 +75,7 @@ function appendSVG(card) {
 	},'xml');
 }
 
+
 function updateSVG(cardId, card) {
 	$(cardId).remove();
 	var newCard = new Card(
