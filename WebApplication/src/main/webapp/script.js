@@ -89,14 +89,15 @@ function updateSVG(cardId, card) {
 }
 
 function appendGroup(group) {
-	console.log("Gruppen hinzufügen!");
-	$("#Group_List").append(
-		$("<li></li>").html(
-			$("<a></a>")
-				.attr("href", "")
-				.html(group.name)
-		)
-	);
+	$("#Group_List").append("<li><a href='' class='change_group'>" + group + "</a></li>\n");
+}
+
+function updateUsername(name){
+	$("#Username_Main").text(name);
+}
+
+function updateActiveGroup(group){
+	$("#Active_Group").text(group);
 }
 
 function multipleCards(cards) {
