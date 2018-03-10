@@ -10,11 +10,11 @@ public class MySQLConnector {
 	
 	public static Connection getConnection() throws SQLException {
 		if (connection == null) {
-			/*try {
-				Class.forName("com.example.jdbc.Driver");
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-			}*/
+			}
 			connection = DriverManager.getConnection(MySQLConnector.DB_URL, MySQLConnector.USER,
 					MySQLConnector.PASS);
 		}
