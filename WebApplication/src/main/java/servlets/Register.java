@@ -22,15 +22,12 @@ public class Register {
 	
 	@GET
 	@Path("/{name}")
-	public User getUser(@PathParam("name") String name) {		
-		return User.getByName(name);
+	public boolean getUser(@PathParam("name") String name) {		
+		return new User(name).exists();
 	}
 	
 
 	@POST
-	//@Path("/{name}/{password}")
-	@Consumes("application/x-www-form-urlencoded")
-	@Produces(MediaType.TEXT_PLAIN)
 	public String registerUser(@FormParam("name") String name, @FormParam("password") String password) {
 		if (password.length()>5) {
 			if (Validation.checkPasswordForHardness(password)) {
@@ -46,8 +43,6 @@ public class Register {
 	}
 	
 	@PUT
-	@Consumes("application/x-www-form-urlencoded")
-	@Produces(MediaType.TEXT_PLAIN)
 	public String updateUser(@FormParam("name") String name, @FormParam("password") String password) {
 		if (password.length()>5) {
 			if (Validation.checkPasswordForHardness(password)) {
@@ -63,8 +58,6 @@ public class Register {
 	}
 	
 	@DELETE
-	@Consumes("application/x-www-form-urlencoded")
-	@Produces(MediaType.TEXT_PLAIN)
 	public String deleteUser(@FormParam("name") String name, @FormParam("password") String password) {
 		User user = new User(name);
 		String hash = DigestUtils.sha256Hex(password);

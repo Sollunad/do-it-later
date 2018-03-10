@@ -44,9 +44,9 @@
 						password = $("#pwd").val();
 					$.post("rest/authenticate", { "name": userName, "password": password },
 						(data, status) => {
-							if (data) { //TODO
+							if (data) {
 								console.log(data);
-								//moveToNextWindow(name);		
+								moveToNextWindow(name);		
 							} else {
 								alert("Login fehlgeschlagen!");
 							}

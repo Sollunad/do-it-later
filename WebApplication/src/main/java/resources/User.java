@@ -102,6 +102,22 @@ public class User extends DatabaseObject {
 			return null;
 		}
 	}
+	
+	public boolean isAdmin(Board board) {
+		return board.getAdmin() == this.name;
+		/*String sql = "SELECT admin FROM board WHERE id=? AND admin=?;";
+		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
+			s.setInt(1, board.getId());
+			s.setString(2, this.name);
+			ResultSet rs = s.executeQuery();
+			while (rs.next()) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;*/
+	}
 
 	@Override
 	public void query() {

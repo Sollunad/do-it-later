@@ -21,13 +21,14 @@ import resources.User;
 @Produces(MediaType.APPLICATION_JSON)
 public class Login {
 	@GET
-	public String getCustomer() {
-		return "HEUTE NICHT MEHR!";
+	@Path("/{name}")
+	public boolean userExists(@PathParam("name") String name) {
+		return new User(name).exists();
 	}
 
 	@POST
 	public boolean postLogin(@FormParam("name") String name, @FormParam("password") String password) {
-		System.out.println("LOGIN-REQUEST: " + name + ", " + password);
+		System.out.println("LOGIN-REQUEST (PUT): " + name + ", " + password);
 		boolean answer = check(name, password);
 		System.out.println("LOGIN-ANSWER: " + answer);
 		return answer;
@@ -35,13 +36,20 @@ public class Login {
 
 	@PUT
 	public boolean putLogin(@FormParam("name") String name, @FormParam("password") String password) {
-		return check(name, password);
+		System.out.println("LOGIN-REQUEST (POST): " + name + ", " + password);
+		boolean answer = check(name, password);
+		System.out.println("LOGIN-ANSWER: " + answer);
+		return answer;
 	}
 
 	@DELETE
-	public boolean deleteCustomer(@FormParam("name") String name, @FormParam("password") String password) {
-		Random random = new Random();
-		return random.nextBoolean(); // ;)
+	public boolean deleteUser(@FormParam("name") String name) {
+		User user = new User(name);
+		if (user.exists())
+			user.delete();
+		else
+			return false;
+		return true;
 	}
 	
 	public static boolean check(String name, String password) {
