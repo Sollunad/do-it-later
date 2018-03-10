@@ -28,7 +28,9 @@ public class Register {
 	
 
 	@POST
+	@Produces("text/plain")
 	public String registerUser(@FormParam("name") String name, @FormParam("password") String password) {
+		System.out.println("Name: " + name + ", Passwort: " + password);
 		if (password.length()>5) {
 			if (Validation.checkPasswordForHardness(password)) {
 				User user = new User(name);
@@ -63,6 +65,6 @@ public class Register {
 		String hash = DigestUtils.sha256Hex(password);
 		user.setPassword(hash);
 		user.delete();
-		return "sucess";
+		return "success";
 	}
 }

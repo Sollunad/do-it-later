@@ -46,9 +46,9 @@
 								placeholder="Enter password" name="pwd">
 						</div>
 					</div>
-					<a href="index.html"><button
+					<button
 							class="btn btn-primary col-lg-6 col-lg-offset-3"
-							id="Register_btn" type="button">Register</button></a>
+							id="Register_btn" type="button">Register</button>
 				</form>
 			</div>
 		</div>
@@ -59,13 +59,13 @@
 				password = $("#pwd").val(),
 				repeated = $("#pwdrep").val();
 			if (password == repeated) {
-				$.post("register", { name: userName, password: password },
+				$.post("rest/register", { "name": userName, "password": password },
 					(data, status) => {
-						if (data) { //TODO
+						if (data == "success") {
 							alert("Registrierung erfolgreich!");
-							window.open("index.html");	
+							location.href = "index.html";	
 						} else {
-							alert("Registrierung fehlgeschlagen!");
+							alert(data);
 						}
 					}
 				);				
