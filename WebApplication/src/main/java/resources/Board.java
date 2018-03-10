@@ -20,8 +20,19 @@ public class Board extends DatabaseObject {
 	private List<User> users;
 	private List<Card> cards;
 
+	public Board() {}
+	
+	public Board(int id) {
+		this.id = id;
+	}
+	
 	public Board(String name) {
 		this.name = name;
+	}
+	
+	public Board(String name, String admin) {
+		this.admin = admin;
+		this.name  = name;
 	}
 
 	public Board(int id, String name, String admin) {
@@ -131,7 +142,16 @@ public class Board extends DatabaseObject {
 
 	@Override
 	public void persist() {
-		// TODO Auto-generated method stub
+		String sql = "INSERT INTO boards (name, admin) VALUES (?, ?);";
+		try(PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)){
+			s.setString(1, this.name);
+			s.setString(2, this.admin);
+			s.executeQuery();
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+			return;
+		}
 
 	}
 

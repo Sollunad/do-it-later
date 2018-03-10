@@ -1,7 +1,12 @@
 package servlets;
 
+import java.awt.List;
 import java.io.IOException;
-import org.json.*;
+import java.util.ArrayList;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import resources.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class CreateGroup
  */
-@WebServlet("/AddUser")
+//@WebServlet("/AddUser")
+@Path("/AddUser")
 public class AddUserToGroup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +30,6 @@ public class AddUserToGroup extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
@@ -32,7 +37,7 @@ public class AddUserToGroup extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	/*protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// Parameter
 		jdbcConnector jd = new jdbcConnector();
@@ -80,9 +85,28 @@ public class AddUserToGroup extends HttpServlet {
 			return;
 		}
 		
+	}*/
+	
+	@POST
+	public void addUser(@FormParam("uname") String uname, @FormParam("gid") int gid) {
+		
+		User user = new User(uname);
+		Board b = new Board(gid);
+		ArrayList<Board> list = (ArrayList<Board>) Board.getAllBoardsFromUser(user);
+		
+		
+		for(Board i : list) {
+			if(i.getId() == gid) {
+				return;
+			}
+			else {
+				b.add(user);
+				return;
+			}
+		}
+		
+		
 	}
+	
+	
 }
-
-/*
- * TODO: JSON Objekt erzeugen und UserID herausziehen, danach Abfrage machen
- */

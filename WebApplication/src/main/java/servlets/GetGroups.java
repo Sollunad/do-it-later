@@ -1,17 +1,21 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import resources.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.*;
-
 /**
  * Servlet implementation class GetGroups
  */
-@WebServlet("/GetGroups")
+//@WebServlet("/GetGroups")
+@Path("/GetGroups")
 public class GetGroups extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -26,7 +30,7 @@ public class GetGroups extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	/*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		jdbcConnector jd = new jdbcConnector();
 		String userID = request.getParameter("uid");
@@ -70,18 +74,20 @@ public class GetGroups extends HttpServlet {
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-	}
+	}*/
+    
+    @GET
+    public ArrayList<Board> getGroups(@FormParam("uid") String uname) {
+    	
+    	User user = new User(uname);
+    	ArrayList<Board> list = (ArrayList<Board>) Board.getAllBoardsFromUser(user);
+    	return list;
+    	
+    }
+    
+    
 
 }
-
-/*
- * TODO: res zu JSON-Objekt machen und Wert f�r Gruppen-IDs auslesen
- * TODO: Alle Gruppennamen holen mit den Gruppen-IDs
- * TODO: Gruppennamen in HTML einbetten
- */
