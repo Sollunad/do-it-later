@@ -18,25 +18,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 //@WebServlet("/AddUser")
 @Path("/AddUser")
-public class AddUserToGroup extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-    /**
-     * Default constructor. 
-     */
+public class AddUserToGroup {
     public AddUserToGroup() {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	/*protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// Parameter
@@ -88,15 +74,15 @@ public class AddUserToGroup extends HttpServlet {
 	}*/
 	
 	@POST
-	public void addUser(@FormParam("uname") String uname, @FormParam("gid") int gid) {
+	public void addUser(@FormParam("name") String userName, @FormParam("board") int boardId) {
 		
-		User user = new User(uname);
-		Board b = new Board(gid);
+		User user = new User(userName);
+		Board b = new Board(boardId);
 		ArrayList<Board> list = (ArrayList<Board>) Board.getAllBoardsFromUser(user);
 		
 		
 		for(Board i : list) {
-			if(i.getId() == gid) {
+			if(i.getId() == boardId) {
 				return;
 			}
 			else {

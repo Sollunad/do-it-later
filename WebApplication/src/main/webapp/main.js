@@ -5,20 +5,19 @@ $(function(){
 	var name = sessionStorage.getItem("userName");
 	updateUsername(name);
 	
-	$.get("rest/GetGroups", { "uid" : name }, function(data){
+	$.get("rest/GetGroups", { "uid" : name }, (data) => {
 			if (data) {
 				multipleGroups(data);
 			} else {
 				alert("Gruppen holen fehlgeschlagen!");
 			}
-		});
 	});
 	
-	$(".change_group").click(function(){
+	$(".change_group").click(() => {
 		var group = $(this).text();
 		sessionStorage.setItem("activeGroup", group);
 		updateActiveGroup(group);
-		//TODO Get GroupID from GroupName
+		// TODO Get GroupID from GroupName
 		$.get("rest/task/bygroup/" + groupId, function(data){
 			if(data){
 				multipleCards(data);
@@ -29,14 +28,14 @@ $(function(){
 	});
 	
 	
-	$("#Create_Group").click(function(){
+	$("#Create_Group").click(() => {
 		var group_name = $("#Group_Name").val();
 		$.post("rest/CreateGroup", {"uid" : name, "gname" : group_name}, function(data){
 			alert(data);
 		});
 	});
 	
-	$("#Insert_User").click(function(){
+	$("#Insert_User").click(() => {
 		var group = sessionStorage.getItem("activeGroup");
 		var user = $("#User_Name").val();
 		$.post("rest/AddUser", {"gid" : group, "uname" : user}, function(data){
@@ -44,7 +43,7 @@ $(function(){
 		});
 	});	
 
-	$("#fixedButton").click(function(){
+	$("#fixedButton").click(() => {
 		$("input#Title").val("");
 		$("input#Content").val("");
 		$("input#Status").val("");
@@ -52,17 +51,15 @@ $(function(){
 		$("#newCardModalConfirm").html("Update");
 	});
 	
-	$("#newCardModalConfirm").click(fucntion(){
+	$("#newCardModalConfirm").click(() => {
 		var title = $("#title").val();
 		var content = $("#content").val();
 		var status = $("#status").val();
 		var group = sessionStorage.getItem("activeGroup");
-		//TODO Get GroupID from GroupName
+		// TODO Get GroupID from GroupName
 		var assignment = $("#assignment").val();
 		$.post("rest/task/" + title + "/" + content + "/" + status + "/" + groupId + "/" + assignment, function(data){
 			alert(data);
 		});
-	});
-	
-	
+	});	
 });

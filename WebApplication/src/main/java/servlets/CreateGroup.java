@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 //@WebServlet("/CreateGroup")
 @Path("/CreateGroup")
-public class CreateGroup extends HttpServlet {
+public class CreateGroup {
 	private static final long serialVersionUID = 1L;
 
     /**

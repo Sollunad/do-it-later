@@ -50,7 +50,6 @@ class UserTest {
 		System.out.println("\t" + testUser.toString());
 		boolean exists = testUser.exists();
 		System.out.println("\tTestUser exists: " + exists);
-		assertFalse(exists, "TestUser existiert bereits!");
 		if (!exists)
 			testUser.persist();
 	}

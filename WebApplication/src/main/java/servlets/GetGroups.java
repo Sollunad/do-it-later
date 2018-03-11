@@ -16,20 +16,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 //@WebServlet("/GetGroups")
 @Path("/GetGroups")
-public class GetGroups extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class GetGroups {
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public GetGroups() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	/*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		jdbcConnector jd = new jdbcConnector();
@@ -80,9 +73,10 @@ public class GetGroups extends HttpServlet {
 	}*/
     
     @GET
-    public ArrayList<Board> getGroups(@FormParam("uid") String uname) {
+    @Path("/{name}")
+    public ArrayList<Board> getGroups(@PathParam("name") String name) {
     	
-    	User user = new User(uname);
+    	User user = new User(name);
     	ArrayList<Board> list = (ArrayList<Board>) Board.getAllBoardsFromUser(user);
     	return list;
     	
