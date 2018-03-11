@@ -14,6 +14,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
@@ -28,72 +29,33 @@ public class PasswordFilter implements Filter {
 		this.context = fConfig.getServletContext();
 	}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		ServletResponse hashResponse = response;
-		
-		if (request instanceof HttpServletRequest) {
-			hashResponse = new CharResponseWrapper((HttpServletResponse) response);
-		}
-		
-		chain.doFilter(request, hashResponse);
-		
-		if (hashResponse instanceof CharResponseWrapper) {
-			String text = hashResponse.toString();
-			if (text != null) {
-				text = DigestUtils.sha256Hex(text);
-				response.getWriter().write(text);
-			}
-		}
-	}
+	public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain) throws IOException, ServletException {  	
+        chain.doFilter(new FilteredRequest(request), response);
+    }
 
 	public void destroy() {
 		//we can close resources here
 	}
 	
-	class CharResponseWrapper extends HttpServletResponseWrapper {
-		  protected CharArrayWriter charWriter;
-
-		  protected PrintWriter writer;
-
-		  protected boolean getOutputStreamCalled;
-
-		  protected boolean getWriterCalled;
-
-		  public CharResponseWrapper(HttpServletResponse response) {
-		    super(response);
-
-		    charWriter = new CharArrayWriter();
-		  }
-
-		  public ServletOutputStream getOutputStream() throws IOException {
-		    if (getWriterCalled) {
-		      throw new IllegalStateException("getWriter already called");
+	static class FilteredRequest extends HttpServletRequestWrapper {
+			
+		    public FilteredRequest(ServletRequest request) {
+		            super((HttpServletRequest)request);
 		    }
-
-		    getOutputStreamCalled = true;
-		    return super.getOutputStream();
-		  }
-
-		  public PrintWriter getWriter() throws IOException {
-		    if (writer != null) {
-		      return writer;
-		    }
-		    if (getOutputStreamCalled) {
-		      throw new IllegalStateException("getOutputStream already called");
-		    }
-		    getWriterCalled = true;
-		    writer = new PrintWriter(charWriter);
-		    return writer;
-		  }
-
-		  public String toString() {
-		    String s = null;
-
-		    if (writer != null) {
-		      s = charWriter.toString();
-		    }
-		    return s;
-		  }
-		}
+	
+		    @Override   
+	        public String getParameter(String paramName) {
+	            String value = super.getParameter(paramName);
+	        
+	             
+	            if ("password".equals(paramName)) {
+	            	String unhashed = super.getParameter("password");
+	            	value = DigestUtils.sha256Hex(unhashed);
+	            }
+	            return value;
+	        }
+	
+	   }
 
 }
