@@ -14,6 +14,7 @@ var groups = [
 	new Group('3', 'Homepages für die Arbeit', 'jessejrichter')
 ];
 
+
 var statColor = {
 	"open":"magenta",
 	"work":"yellow",
@@ -70,6 +71,13 @@ function appendSVG(card) {
 		$(cardId + " > #delete_space").click( () => {
 			if (confirm("Delete Card?")) {
 				$(cardId).remove();
+				$.ajax({
+					url: "rest/task/" + cardId,
+					type: "DELETE",
+					success: function(data){
+						alert()
+					}
+				});
 			}
 		});		
 	},'xml');
@@ -78,15 +86,27 @@ function appendSVG(card) {
 
 function updateSVG(cardId, card) {
 	$(cardId).remove();
+	var title = $("input#title").val();
+	var content = $("input#content").val();
+	var status = $("input#status").val();
+	var assignment = $("input#assignment").val();
+	//TODO GET GroupID
 	var newCard = new Card(
 		card.id,
-		$("input#title").val(),
-		$("input#content").val(),
-		$("input#status").val(),
-		$("input#assignment").val(),
+		title,
+		content,
+		status,
+		assignment,
 		card.time
 	);
 	appendSVG(newCard);
+	$.ajax({
+		url: "rest/task/" + cardId + "/" + title + "/" + content + "/" + status + "/" + groupId + "/" + assignment,
+		type: "PUT",
+		success: function(data){
+			alert()
+		}
+	});
 }
 
 function appendGroup(group) {

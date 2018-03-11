@@ -15,7 +15,6 @@
 </head>
 <body>
 	<div class="container-fluid col-lg-12">
-
 		<nav class="navbar navbar-inverse">
 			<div class="container-fluid">
 				<div class="navbar-header">
@@ -51,17 +50,7 @@
 		<script src="script.js"></script>
 		<script src="main.js"></script>
 
-		<button id="fixedButton" data-toggle="modal"
-			data-target="#newCardModal">+</button>
-		<script>
-					$("#fixedButton").click(() => {
-						$("input#title").val("");
-						$("input#content").val("");
-						$("input#status").val("");
-						$("input#assignment").val("");
-						$("#newCardModalConfirm").html("Update");
-					});
-				</script>
+		<button id="fixedButton" data-toggle="modal" data-target="#newCardModal">+</button>
 
 		<!-- MODAL: Hinzufügen einer neuen Karte -->
 		<div id="newCardModal" class="modal fade" role="dialog">
@@ -92,8 +81,7 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button id="newCardModalConfirm" type="button"
-							data-dismiss="modal">Create</button>
+						<button id="newCardModalConfirm" type="button" data-dismiss="modal">Create</button>
 						<button id="newCardModalClose" type="button" data-dismiss="modal">Close</button>
 					</div>
 				</div>
@@ -112,12 +100,12 @@
 						<form>
 							<div class="form-group">
 								<label for="recipient-name" class="form-control-label">Name:</label>
-								<input type="text" class="form-control" id="name">
+								<input type="text" class="form-control" id="Group_Name">
 							</div>
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal">Create</button>
+						<button type="button" id="Create_Group" data-dismiss="modal">Create</button>
 						<button type="button" data-dismiss="modal">Close</button>
 					</div>
 				</div>
@@ -136,12 +124,12 @@
 						<form>
 							<div class="form-group">
 								<label for="recipient-name" class="form-control-label">Name:</label>
-								<input type="text" class="form-control" id="name">
+								<input type="text" class="form-control" id="User_Name">
 							</div>
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" data-dismiss="modal">Confirm</button>
+						<button type="button" id="Insert_User" data-dismiss="modal">Confirm</button>
 						<button type="button" data-dismiss="modal">Close</button>
 					</div>
 				</div>
