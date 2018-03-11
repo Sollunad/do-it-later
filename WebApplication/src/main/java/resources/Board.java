@@ -122,17 +122,15 @@ public class Board extends DatabaseObject {
 
 	@Override
 	public void persist() {
-		String sql = "INSERT INTO boards (name, admin) VALUES (?, ?);";
+		String sql = "INSERT INTO board (name, admin) VALUES (?, ?);";
 		try(PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)){
 			s.setString(1, this.name);
 			s.setString(2, this.admin);
-			s.executeQuery();
+			s.executeUpdate();
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
-			return;
 		}
-
 	}
 
 	@Override

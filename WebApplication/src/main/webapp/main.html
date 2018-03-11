@@ -11,6 +11,7 @@
 	src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
 <script
 	src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"></script>
+<script src="js.cookie.js"></script>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -32,14 +33,14 @@
 					<li><a href="chat.html" target="_blank">Group Chat</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li class="navbar-text" id="Username_Main"><span class="glyphicon glyphicon-user"></span>
-						Max Mustermann</li>
-					<li><a href="index.html"><span
-							class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+					<li class="navbar-text" id="Username_Main"><span
+						class="glyphicon glyphicon-user"></span> Max Mustermann</li>
+					<li><a id="logout" href="index.html"><span
+							class="glyphicon glyphicon-log-out"></span>Logout</a></li>
 				</ul>
 			</div>
 		</nav>
-		
+
 
 		<div id="Task_List">
 			<div id="open_tasks"></div>
@@ -50,7 +51,8 @@
 		<script src="script.js"></script>
 		<script src="main.js"></script>
 
-		<button id="fixedButton" data-toggle="modal" data-target="#newCardModal">+</button>
+		<button id="fixedButton" data-toggle="modal"
+			data-target="#newCardModal">+</button>
 
 		<!-- MODAL: Hinzufügen einer neuen Karte -->
 		<div id="newCardModal" class="modal fade" role="dialog">
@@ -81,7 +83,8 @@
 						</form>
 					</div>
 					<div class="modal-footer">
-						<button id="newCardModalConfirm" type="button" data-dismiss="modal">Create</button>
+						<button id="newCardModalConfirm" type="button"
+							data-dismiss="modal">Create</button>
 						<button id="newCardModalClose" type="button" data-dismiss="modal">Close</button>
 					</div>
 				</div>

@@ -20,11 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 @Path("/GetGroups")
 @Produces(MediaType.APPLICATION_JSON)
 public class GetGroups {
-       
-    public GetGroups() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -78,7 +73,6 @@ public class GetGroups {
     @GET
     @Path("/{name}")
     public Board[] getGroups(@PathParam("name") String name) {
-    //public String getGroups(@QueryParam("uid") String uname) {
     	
     	User user = new User(name);
     	List<Board> list = Board.getAllBoardsFromUser(user);

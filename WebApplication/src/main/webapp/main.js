@@ -2,7 +2,7 @@ $(function(){
 	
 	//multipleCards(cards);
 	//multipleGroups(groups);	
-	var name = $.cookie("userName"); // sessionStorage.getItem("userName");
+	var name = Cookies.get('userName'); // sessionStorage.getItem("userName");
 	console.log(name);
 	updateUsername(name);
 	
@@ -20,12 +20,16 @@ $(function(){
 		updateActiveGroup(group);
 		// TODO Get GroupID from GroupName
 		$.get("rest/task/bygroup/" + groupId, function(data){
-			if(data){
+			if (data) {
 				multipleCards(data);
-			}else{
+			} else {
 				alert("Fehler beim laden der Tasks.")
 			}
 		});
+	});
+	
+	$("#logout").click(() => {
+		Cookies.remove('userName');
 	});
 	
 	

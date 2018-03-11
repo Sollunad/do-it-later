@@ -49,8 +49,9 @@ public class Login {
 	
 	public static boolean check(String name, String password) {
 		User user = new User(name);
-		String hash = DigestUtils.sha256Hex(password);
-		user.setPassword(hash);
+		//String hash = DigestUtils.sha256Hex(password);
+		//user.setPassword(hash);
+		user.setPassword(password);
 		return user.login();
 	}
 }

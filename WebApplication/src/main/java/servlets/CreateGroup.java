@@ -10,31 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class CreateGroup
- */
-//@WebServlet("/CreateGroup")
 @Path("/CreateGroup")
 public class CreateGroup {
 	private static final long serialVersionUID = 1L;
 
-    /**
-     * Default constructor. 
-     */
     public CreateGroup() {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	/*protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	/*protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		// Parameter
@@ -57,9 +44,9 @@ public class CreateGroup {
 	}*/
     
     @POST
-    public void createGroup(@FormParam("gname") String gname, @FormParam("uid") String uname) {
+    public void createGroup(@FormParam("name") String name, @FormParam("admin") String admin) {
     	
-    	Board b = new Board(gname, uname);
+    	Board b = new Board(name, admin);
     	b.persist();
     	return;
     }

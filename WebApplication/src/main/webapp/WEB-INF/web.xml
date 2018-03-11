@@ -36,10 +36,10 @@
 	
 	<filter>
 		<filter-name>passwordFilter</filter-name>
-		<filter-class>PasswordFilter</filter-class>
+		<filter-class>servlets.PasswordFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>passwordFilter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/rest/authenticate</url-pattern>
 	</filter-mapping>
 </web-app>
