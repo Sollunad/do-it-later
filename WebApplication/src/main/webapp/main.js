@@ -1,11 +1,12 @@
 $(function(){
 	
-	multipleCards(cards);
-	multipleGroups(groups);	
-	var name = sessionStorage.getItem("userName");
+	//multipleCards(cards);
+	//multipleGroups(groups);	
+	var name = $.cookie("userName"); // sessionStorage.getItem("userName");
+	console.log(name);
 	updateUsername(name);
 	
-	$.get("rest/GetGroups", { "uid" : name }, (data) => {
+	$.get("rest/GetGroups/" + name, (data) => {
 			if (data) {
 				multipleGroups(data);
 			} else {
@@ -30,7 +31,8 @@ $(function(){
 	
 	$("#Create_Group").click(() => {
 		var group_name = $("#Group_Name").val();
-		$.post("rest/CreateGroup", {"uid" : name, "gname" : group_name}, function(data){
+		console.log("Neue Gruppe: " + group_name + ", Admin: " + name);
+		$.post("rest/CreateGroup", {"name" : group_name, "admin" : name}, function(data){
 			alert(data);
 		});
 	});
