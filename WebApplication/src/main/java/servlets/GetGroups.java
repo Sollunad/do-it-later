@@ -2,7 +2,9 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+import com.google.gson.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import resources.*;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 //@WebServlet("/GetGroups")
 @Path("/GetGroups")
+@Produces(MediaType.APPLICATION_JSON)
 public class GetGroups {
        
     public GetGroups() {
@@ -71,17 +74,54 @@ public class GetGroups {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}*/
-    
+
     @GET
     @Path("/{name}")
-    public ArrayList<Board> getGroups(@PathParam("name") String name) {
+    public Board[] getGroups(@PathParam("name") String name) {
+    //public String getGroups(@QueryParam("uid") String uname) {
     	
     	User user = new User(name);
-    	ArrayList<Board> list = (ArrayList<Board>) Board.getAllBoardsFromUser(user);
-    	return list;
+    	List<Board> list = Board.getAllBoardsFromUser(user);
+    	return list.toArray(new Board[list.size()]);
+    	
+    	/*Gson gs = new Gson();
+    	RBoard rb = null;
+    	String result = null;
+    	
+    	for(Board b : list) {
+    		if(rb == null) {
+    			rb = new RBoard(b.getId(), b.getName());
+    		}
+    		else {
+    			rb.addEntry(b.getId(), b.getName());
+    		}
+    		
+    	}
+    	
+    	if(rb != null)
+    		 result = gs.toJson(rb);
+    	
+    	return result;*/
+    	
+    	
     	
     }
     
+    /*class RBoard {
+    	
+    	private ArrayList<Integer> ids = new ArrayList<>();
+    	private ArrayList<String> names = new ArrayList<>();
+    	
+    	RBoard(int id, String name){
+    		this.ids.add(id);
+    		this.names.add(name);
+    	}
+    	
+    	private void addEntry(int id, String name) {
+    		this.ids.add(id);
+    		this.names.add(name);
+    	}
+//    }*/
     
 
 }

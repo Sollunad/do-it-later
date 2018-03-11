@@ -17,8 +17,6 @@ public class Board extends DatabaseObject {
 	private int id;
 	private String name;
 	private String admin;
-	private List<User> users;
-	private List<Card> cards;
 
 	public Board() {}
 	
@@ -51,24 +49,6 @@ public class Board extends DatabaseObject {
 
 	public String getAdmin() {
 		return admin;
-	}
-
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public List<Card> getCards() {
-		return cards;
-	}
-
-	// TODO
-	public void setUsers() {
-		this.users = User.getAllUsers(this);
-	}
-
-	// TODO
-	public void setCards() {
-		this.cards = Card.getAllCardsFromBoard(this);
 	}
 	
 	public void add(User user) {
