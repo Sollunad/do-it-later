@@ -19,23 +19,24 @@ import resources.Validation;
 @Path("/register")
 @Produces(MediaType.APPLICATION_JSON)
 public class Register {
-	
+
 	@GET
 	@Path("/{name}")
-	public boolean getUser(@PathParam("name") String name) {		
+	public boolean getUser(@PathParam("name") String name) {
 		return new User(name).exists();
 	}
-	
 
 	@POST
 	@Produces("text/plain")
 	public String registerUser(@FormParam("name") String name, @FormParam("password") String password) {
 		System.out.println("Name: " + name + ", Passwort: " + password);
-		if (password.length()>5) {
+		if (password.length() > 5) {
 			if (Validation.checkPasswordForHardness(password)) {
 				User user = new User(name);
 				String hash = DigestUtils.sha256Hex(password);
 				user.setPassword(hash);
+				if (user.exists())
+					return "Nutzername bereits vergeben!";
 				user.persist();
 				return "success";
 			}
@@ -43,23 +44,29 @@ public class Register {
 		}
 		return "Passwort muss mindestens 6 Zeichen lang sein!";
 	}
-	
+
 	@PUT
-	public String updateUser(@FormParam("name") String name, @FormParam("password") String password) {
-		if (password.length()>5) {
+	@Produces("text/plain") // { "name":"", "password":"", "newpassword":"" }
+	public String updateUser(@FormParam("name") String name, @FormParam("password") String password,
+			@FormParam("newpassword") String newPassword) {
+		if (password.length() > 5) {
 			if (Validation.checkPasswordForHardness(password)) {
 				User user = new User(name);
-				String hash = DigestUtils.sha256Hex(password);
-				user.setPassword(hash);
-				user.register();
-				return "success";
+				user.setPassword(Validation.hash(password));
+				if (user.login()) {
+					user.setPassword(Validation.hash(password));
+					user.update();
+					return "success";
+				}
+				return "Update konnte nicht ausgeführt werden, überprüfen Sie das Passwort.";
 			}
 			return "Passwort muss eine Zahl und ein Sonderzeichen enthalten!";
 		}
 		return "Passwort muss mindestens 6 Zeichen lang sein!";
 	}
-	
+
 	@DELETE
+	@Produces("text/plain")
 	public String deleteUser(@FormParam("name") String name, @FormParam("password") String password) {
 		User user = new User(name);
 		String hash = DigestUtils.sha256Hex(password);

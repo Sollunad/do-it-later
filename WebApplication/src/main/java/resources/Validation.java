@@ -1,5 +1,7 @@
 package resources;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 public class Validation {
 	public static boolean checkPasswordForHardness(String password) {
 		boolean specChar = false;
@@ -12,6 +14,10 @@ public class Validation {
 				specChar = true;
 		}
 		return (specChar && number);
+	}
+	
+	public static String hash(String string) {
+		return DigestUtils.sha256Hex(string);
 	}
 
 }

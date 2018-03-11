@@ -20,15 +20,10 @@ import resources.User;
 @Path("/authenticate")
 @Produces(MediaType.APPLICATION_JSON)
 public class Login {
-	@GET
-	@Path("/{name}")
-	public boolean userExists(@PathParam("name") String name) {
-		return new User(name).exists();
-	}
 
 	@POST
 	public boolean postLogin(@FormParam("name") String name, @FormParam("password") String password) {
-		System.out.println("LOGIN-REQUEST (PUT): " + name + ", " + password);
+		System.out.println("LOGIN-REQUEST (POST): " + name);
 		boolean answer = check(name, password);
 		System.out.println("LOGIN-ANSWER: " + answer);
 		return answer;
@@ -36,7 +31,7 @@ public class Login {
 
 	@PUT
 	public boolean putLogin(@FormParam("name") String name, @FormParam("password") String password) {
-		System.out.println("LOGIN-REQUEST (POST): " + name + ", " + password);
+		System.out.println("LOGIN-REQUEST (PUT): " + name);
 		boolean answer = check(name, password);
 		System.out.println("LOGIN-ANSWER: " + answer);
 		return answer;

@@ -178,8 +178,8 @@ public class User extends DatabaseObject {
 		}
 	}
 
-	public void register() {
-		String sql = "INSERT INTO user (name, password) VALUES (?, ?) ON DUPLICATE KEY UPDATE Username=?, Password=?;";
+	public void update() {
+		String sql = "INSERT INTO user (name, password) VALUES (?, ?) ON DUPLICATE KEY UPDATE name=?, password=?;";
 		try (PreparedStatement s = MySQLConnector.getConnection().prepareStatement(sql)) {
 			s.setString(1, this.name);
 			s.setString(2, this.password);
