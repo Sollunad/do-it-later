@@ -4,6 +4,7 @@ import javax.ws.rs.PathParam;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -22,9 +23,16 @@ import resources.User;
 public class TaskServlet {
 	
 	@GET
-	@Path("/{id}")
+	@Path("/byid/{id}")
 	public Task getTask(@PathParam("id") int id) {		
 		return Task.getById(id);
+	}
+	
+	
+	@GET
+	@Path("/bygroup/{gid}")
+	public List<Task> getTaskByGroup(@PathParam("gid") int gid) {		
+		return Task.getByGroup(gid);
 	}
 	
 
@@ -33,7 +41,6 @@ public class TaskServlet {
 	@Consumes("application/x-www-form-urlencoded")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String addTask(@PathParam("title") String title, @PathParam("description") String description, @PathParam("status") String status, @PathParam("group") int group, @PathParam("status") String bearbeiter) {
-		Date timestamp = new Date();
 		String timeStamp = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date());
 		User bearbeiterUser = User.getByName(bearbeiter);
 		Task task = new Task(title, description, status, bearbeiterUser, group, timeStamp);
