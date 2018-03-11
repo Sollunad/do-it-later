@@ -2,7 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+import com.google.gson.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import resources.*;
@@ -80,14 +80,46 @@ public class GetGroups extends HttpServlet {
 	}*/
     
     @GET
-    public ArrayList<Board> getGroups(@FormParam("uid") String uname) {
+    public String getGroups(@QueryParam("uid") String uname) {
     	
     	User user = new User(uname);
     	ArrayList<Board> list = (ArrayList<Board>) Board.getAllBoardsFromUser(user);
-    	return list;
+    	Gson gs = new Gson();
+    	RBoard rb = null;
+    	String result = null;
+    	
+    	for(Board b : list) {
+    		if(rb == null) {
+    			rb = new RBoard(b.getId(), b.getName());
+    		}
+    		else {
+    			rb.addEntry(b.getId(), b.getName());
+    		}
+    		
+    	}
+    	
+    	if(rb != null)
+    		 result = gs.toJson(rb);
+    	
+    	return result;
     	
     }
     
+    class RBoard {
+    	
+    	private ArrayList<Integer> ids = new ArrayList<>();
+    	private ArrayList<String> names = new ArrayList<>();
+    	
+    	RBoard(int id, String name){
+    		this.ids.add(id);
+    		this.names.add(name);
+    	}
+    	
+    	private void addEntry(int id, String name) {
+    		this.ids.add(id);
+    		this.names.add(name);
+    	}
+    }
     
 
 }
