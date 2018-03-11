@@ -15,10 +15,17 @@ $(function(){
 	});
 	
 	$(".change_group").click(() => {
-		var group = $(this).text();
-		sessionStorage.setItem("activeGroup", group);
+		var groupName = $(this).text();
+		var groupId;
+		$.get("rest/GetGroups/" + groupName, function(data){
+			if(data){
+				groupId = data[0].id;
+			}else{
+				alert("Fehler beim Finden der Gruppe.")
+			}
+		});
+		sessionStorage.setItem("activeGroup", groupId);
 		updateActiveGroup(group);
-		// TODO Get GroupID from GroupName
 		$.get("rest/task/bygroup/" + groupId, function(data){
 			if(data){
 				multipleCards(data);
@@ -57,8 +64,7 @@ $(function(){
 		var title = $("#title").val();
 		var content = $("#content").val();
 		var status = $("#status").val();
-		var group = sessionStorage.getItem("activeGroup");
-		// TODO Get GroupID from GroupName
+		var groupId = sessionStorage.getItem("activeGroup");
 		var assignment = $("#assignment").val();
 		$.post("rest/task/" + title + "/" + content + "/" + status + "/" + groupId + "/" + assignment, function(data){
 			alert(data);
