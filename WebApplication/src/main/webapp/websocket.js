@@ -8,6 +8,8 @@ $(function(){
 	
 	name = sessionStorage.getItem("userName");
 	group = sessionStorage.getItem("activeGroup");
+	$("#username").text(name);
+	$("#act_group").text(group);
 	
 	if ("WebSocket" in window){
 		websocket = new WebSocket("ws://localhost:8080/WebSockets/echo/" + group);
@@ -33,11 +35,18 @@ $(function(){
 	websocket.onclose = function(){
 		cancelAlive();
 	};
+	
+	$("#msg").keypress(function (e) {
+		  if (e.which == 13) {
+		    send();
+		  }
+		});
 });
 
 function send(){
 	var message = $("#msg").val();
 	websocket.send(name + ": " + message);
+	$("#msg").val("");
 };
 
 function keepAlive() { 
